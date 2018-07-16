@@ -37,7 +37,7 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(${PROJECT_NAME} tests/strutil_tests.cpp strutil.h)
+add_executable(${PROJECT_NAME} tests/strutil_tests.cpp tests/test_cases.cpp strutil.h)
 target_link_libraries(${PROJECT_NAME} gtest_main)
 
 # add_test(NAME example_test COMMAND ${PROJECT_NAME})

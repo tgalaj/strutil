@@ -1,11 +1,11 @@
 #pragma once
 
-#include <string>
-#include <sstream>
 #include <algorithm>
 #include <cctype>
-#include <vector>
 #include <regex>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace strutil
 {
@@ -52,7 +52,7 @@ namespace strutil
             return std::tolower(c);
         });
 
-        return str;
+        return result;
     }
 
     static std::string to_upper(const std::string & str)
@@ -63,7 +63,7 @@ namespace strutil
             return std::toupper(c);
         });
 
-        return str;
+        return result;
     }
 
     static bool compare_ignore_case(const std::string & str1, const std::string & str2)
@@ -73,13 +73,13 @@ namespace strutil
 
     // trim from start (in place)
     // http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
-    static void ltrim(std::string & str)
+    static void trim_left(std::string & str)
     {
         str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](int ch) { return !std::isspace(ch); }));
     }
 
     // trim from end (in place)
-    static void rtrim(std::string & str)
+    static void trim_right(std::string & str)
     {
         str.erase(std::find_if(str.rbegin(), str.rend(), [](int ch) { return !std::isspace(ch); }).base(), str.end());
     }
@@ -87,21 +87,21 @@ namespace strutil
     // trim from both ends (in place)
     static void trim(std::string & str)
     {
-        ltrim(str);
-        rtrim(str);
+        trim_left(str);
+        trim_right(str);
     }
 
     // trim from start (copying)
-    static std::string ltrim_copy(std::string str)
+    static std::string trim_left_copy(std::string str)
     {
-        ltrim(str);
+        trim_left(str);
         return str;
     }
 
     // trim from end (copying)
-    static std::string rtrim_copy(std::string str)
+    static std::string trim_right_copy(std::string str)
     {
-        rtrim(str);
+        trim_right(str);
         return str;
     }
 
@@ -113,7 +113,7 @@ namespace strutil
     }
 
     // http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string
-    static bool replace(std::string & str, const std::string & from, const std::string & to)
+    static bool replace_first(std::string & str, const std::string & from, const std::string & to)
     {
         size_t start_pos = str.find(from);
         if (start_pos == std::string::npos)
@@ -161,7 +161,7 @@ namespace strutil
 
     static bool starts_with(const std::string & str, const std::string & prefix)
     {
-        return str.find(prefix);
+        return str.find(prefix) == 0;
     }
 
     static std::vector<std::string> split(const std::string & str, char delim)
@@ -179,7 +179,7 @@ namespace strutil
     }
 
     template<typename T>
-    static std::string join(const std::vector<std::string> & v, const std::string & delim)
+    static std::string join(const std::vector<T> & v, const std::string & delim)
     {
         std::ostringstream result;
         for(auto it = v.begin(); it != v.end(); ++it)
