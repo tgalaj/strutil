@@ -1,5 +1,56 @@
+/**
+ * Copyright (C) 2018 Tomasz Ga³aj
+ */
+
 #include <gtest/gtest.h>
 #include "strutil.h"
+
+/*
+* Comparison tests
+*/
+
+TEST(Compare, compare_ignore_case)
+{
+    std::string str1 = "PoKeMoN!";
+    std::string str2 = "pokemon!";
+    std::string str3 = "POKEMON";
+
+    EXPECT_EQ(true, strutil::compare_ignore_case(str1, str2));
+    EXPECT_EQ(false, strutil::compare_ignore_case(str1, str3));
+    EXPECT_EQ(false, strutil::compare_ignore_case(str2, str3));
+}
+
+TEST(Compare, starts_with)
+{
+    EXPECT_EQ(true, strutil::starts_with("m_DiffuseTexture", "m_"));
+    EXPECT_EQ(true, strutil::starts_with("This is a simple test case", "This "));
+
+    EXPECT_EQ(false, strutil::starts_with("p_DiffuseTexture", "m_"));
+    EXPECT_EQ(false, strutil::starts_with("This is a simple test case", "his "));
+}
+
+TEST(Compare, ends_with)
+{
+    EXPECT_EQ(true, strutil::ends_with("DiffuseTexture_m", "_m"));
+    EXPECT_EQ(true, strutil::ends_with("This is a simple test case", " test case"));
+
+    EXPECT_EQ(false, strutil::ends_with("DiffuseTexture_p", "_m"));
+    EXPECT_EQ(false, strutil::ends_with("This is a simple test case", "test cas"));
+}
+
+TEST(Compare, contains)
+{
+    EXPECT_EQ(true, strutil::contains("DiffuseTexture_m", "fuse"));
+    EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", "fuser"));
+}
+
+TEST(Compare, matches)
+{
+    const std::regex check_mail("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+
+    EXPECT_EQ(true, strutil::matches("jon.doe@somehost.com", check_mail));
+    EXPECT_EQ(false, strutil::matches("jon.doe@", check_mail));
+}
 
 /*
  * Parsing tests
@@ -156,6 +207,38 @@ TEST(Parsing, string_to_neg_bool)
 }
 
 /*
+* Splitting and tokenizing
+*/
+
+TEST(Splitting, split)
+{
+    std::string str1 = "Col1;Col2;Col3";
+
+    std::vector<std::string> res = strutil::split(str1, ';');
+    std::vector<std::string> expected = { "Col1", "Col2", "Col3" };
+
+    ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
+
+    for (unsigned i = 0; i < res.size(); ++i)
+    {
+        EXPECT_EQ(expected[i], res[i]) << "Vectors differ at index " << i;
+    }
+}
+
+TEST(Splitting, join)
+{
+    std::string str1 = "Col1;Col2;Col3";
+    std::vector<std::string> tokens1 = { "Col1", "Col2", "Col3" };
+
+    EXPECT_EQ(str1, strutil::join<std::string>(tokens1, ";"));
+
+    std::string str2 = "1|2|3";
+    std::vector<unsigned> tokens2 = { 1, 2, 3 };
+
+    EXPECT_EQ(str2, strutil::join<unsigned>(tokens2, "|"));
+}
+
+/*
  * Text manipulation tests
  */
 
@@ -250,81 +333,20 @@ TEST(TextManip, no_replace_last)
     EXPECT_EQ("This is $name and that is also $name.", str1);
 }
 
-/*
- * Comparison tests
- */
-
-TEST(Compare, compare_ignore_case)
+TEST(TextManip, replace_all)
 {
-    std::string str1 = "PoKeMoN!";
-    std::string str2 = "pokemon!";
-    std::string str3 = "POKEMON";
+    std::string str1 = "This is $name and that is also $name.";
+    bool res = strutil::replace_all(str1, "$name", "Jon Doe");
 
-    EXPECT_EQ(true,  strutil::compare_ignore_case(str1, str2));
-    EXPECT_EQ(false, strutil::compare_ignore_case(str1, str3));
-    EXPECT_EQ(false, strutil::compare_ignore_case(str2, str3));
+    EXPECT_EQ(true, res);
+    EXPECT_EQ("This is Jon Doe and that is also Jon Doe.", str1);
 }
 
-TEST(Compare, starts_with)
+TEST(TextManip, no_replace_all)
 {
-    EXPECT_EQ(true, strutil::starts_with("m_DiffuseTexture", "m_"));
-    EXPECT_EQ(true, strutil::starts_with("This is a simple test case", "This "));
+    std::string str1 = "This is $name and that is also $name.";
+    bool res = strutil::replace_last(str1, "$name$", "Jon Doe");
 
-    EXPECT_EQ(false, strutil::starts_with("p_DiffuseTexture", "m_"));
-    EXPECT_EQ(false, strutil::starts_with("This is a simple test case", "his "));
-}
-
-TEST(Compare, ends_with)
-{
-    EXPECT_EQ(true, strutil::ends_with("DiffuseTexture_m", "_m"));
-    EXPECT_EQ(true, strutil::ends_with("This is a simple test case", " test case"));
-
-    EXPECT_EQ(false, strutil::ends_with("DiffuseTexture_p", "_m"));
-    EXPECT_EQ(false, strutil::ends_with("This is a simple test case", "test cas"));
-}
-
-TEST(Compare, contains)
-{
-    EXPECT_EQ(true, strutil::contains("DiffuseTexture_m",  "fuse"));
-    EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", "fuser"));
-}
-
-TEST(Compare, matches)
-{
-    const std::regex check_mail("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
-
-    EXPECT_EQ(true,  strutil::matches("jon.doe@somehost.com", check_mail));
-    EXPECT_EQ(false, strutil::matches("jon.doe@",             check_mail));
-}
-
-/*
- * Splitting and tokenizing
- */
-
-TEST(Splitting, split)
-{
-    std::string str1 = "Col1;Col2;Col3";
-
-    std::vector<std::string> res = strutil::split(str1, ';');
-    std::vector<std::string> expected = { "Col1", "Col2", "Col3" };
-    
-    ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
-
-    for (unsigned i = 0; i < res.size(); ++i)
-    {
-        EXPECT_EQ(expected[i], res[i]) << "Vectors differ at index " << i;
-    }
-}
-
-TEST(Splitting, join)
-{
-    std::string str1 = "Col1;Col2;Col3";
-    std::vector<std::string> tokens1 = { "Col1", "Col2", "Col3" };
-
-    EXPECT_EQ(str1, strutil::join<std::string>(tokens1, ";"));
-
-    std::string str2 = "1|2|3";
-    std::vector<unsigned> tokens2 = { 1, 2, 3 };
-
-    EXPECT_EQ(str2, strutil::join<unsigned>(tokens2, "|"));
+    EXPECT_EQ(false, res);
+    EXPECT_EQ("This is $name and that is also $name.", str1);
 }

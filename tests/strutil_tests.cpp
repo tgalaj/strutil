@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2018 Tomasz Ga³aj
+ */
+
 #include <gtest/gtest.h>
 
 int main(int argc, char** argv)

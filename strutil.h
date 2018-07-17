@@ -1,3 +1,9 @@
+/**
+ * strutil v1.0 - header-only string utility library 
+ * 
+ * Copyright (C) 2018 Tomasz Ga³aj
+ */
+
 #pragma once
 
 #include <algorithm>
@@ -10,10 +16,11 @@
 namespace strutil
 {
     /**
-     * \brief
+     * \brief Converts any datatype into std::string. 
+     *        Datatype must support << operator.
      * \tparam T
-     * \param value
-     * \return
+     * \param value - will be converted into std::string.
+     * \return Converted value as std::string.
      */
     template<typename T>
     static std::string to_string(T value)
@@ -25,10 +32,11 @@ namespace strutil
     }
 
     /**
-     * \brief
+     * \brief Converts std::string into any datatype.
+     *        Datatype must support << operator.
      * \tparam T
-     * \param str
-     * \return
+     * \param str - std::string that will be converted into datatype T.
+     * \return Variable of datatype T.
      */
     template<typename T>
     static T parse_string(const std::string & str)
@@ -40,9 +48,9 @@ namespace strutil
     }
 
     /**
-     * \brief
-     * \param str
-     * \return
+     * \brief Converts std::string to lower case.
+     * \param str - std::string that needs to be converted.
+     * \return Lower case input std::string.
      */
     static std::string to_lower(const std::string & str)
     {
@@ -55,6 +63,11 @@ namespace strutil
         return result;
     }
 
+    /**
+     * \brief Converts std::string to upper case.
+     * \param str - std::string that needs to be converted.
+     * \return Upper case input std::string.
+     */
     static std::string to_upper(const std::string & str)
     {
         auto result = str;
@@ -66,92 +79,157 @@ namespace strutil
         return result;
     }
 
+    /**
+     * \brief Compares two std::strings ignoring their case (lower/upper).
+     * \param str1 - std::string to compare
+     * \param str2 - std::string to compare
+     * \return True if str1 and str2 are equal, false otherwise.
+     */
     static bool compare_ignore_case(const std::string & str1, const std::string & str2)
     {
         return to_lower(str1) == to_lower(str2);
     }
 
-    // trim from start (in place)
-    // http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
+    /**
+     * \brief Trims (in-place) white spaces from the left side of std::string.
+     *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+     * \param str - input std::string to remove white spaces from.
+     */
     static void trim_left(std::string & str)
     {
         str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](int ch) { return !std::isspace(ch); }));
     }
 
-    // trim from end (in place)
+    /**
+     * \brief Trims (in-place) white spaces from the right side of std::string.
+     *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+     * \param str - input std::string to remove white spaces from.
+     */
     static void trim_right(std::string & str)
     {
         str.erase(std::find_if(str.rbegin(), str.rend(), [](int ch) { return !std::isspace(ch); }).base(), str.end());
     }
 
-    // trim from both ends (in place)
+    /**
+     * \brief Trims (in-place) white spaces from the both sides of std::string.
+     *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+     * \param str - input std::string to remove white spaces from.
+     */
     static void trim(std::string & str)
     {
         trim_left(str);
         trim_right(str);
     }
 
-    // trim from start (copying)
+     /**
+      * \brief Trims white spaces from the left side of std::string.
+      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+      * \param str - input std::string to remove white spaces from.
+      * \return Copy of input str with trimmed white spaces.
+      */
     static std::string trim_left_copy(std::string str)
     {
         trim_left(str);
         return str;
     }
 
-    // trim from end (copying)
+    /**
+      * \brief Trims white spaces from the right side of std::string.
+      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+      * \param str - input std::string to remove white spaces from.
+      * \return Copy of input str with trimmed white spaces.
+      */
     static std::string trim_right_copy(std::string str)
     {
         trim_right(str);
         return str;
     }
 
-    // trim from both ends (copying)
+    /**
+      * \brief Trims white spaces from the both sides of std::string.
+      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
+      * \param str - input std::string to remove white spaces from.
+      * \return Copy of input str with trimmed white spaces.
+      */
     static std::string trim_copy(std::string str)
     {
         trim(str);
         return str;
     }
 
-    // http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string
-    static bool replace_first(std::string & str, const std::string & from, const std::string & to)
+    /**
+     * \brief Replaces (in-place) the first occurance of target with replacement.
+     *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
+     * \param str - input std::string that will be modified.
+     * \param target - substring that will be replaced with replacement.
+     * \param replecament - substring that will replace target.
+     * \return True if replacement was successfull, false otherwise.
+     */
+    static bool replace_first(std::string & str, const std::string & target, const std::string & replecament)
     {
-        size_t start_pos = str.find(from);
+        size_t start_pos = str.find(target);
         if (start_pos == std::string::npos)
         {
             return false;
         }
 
-        str.replace(start_pos, from.length(), to);
+        str.replace(start_pos, target.length(), replecament);
         return true;
     }
 
-    static bool replace_last(std::string & str, const std::string & from, const std::string & to)
+    /**
+     * \brief Replaces (in-place) last occurance of target with replacement.
+     *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
+     * \param str - input std::string that will be modified.
+     * \param target - substring that will be replaced with replacement.
+     * \param replecament - substring that will replace target.
+     * \return True if replacement was successfull, false otherwise.
+     */
+    static bool replace_last(std::string & str, const std::string & target, const std::string & replecament)
     {
-        size_t start_pos = str.rfind(from);
+        size_t start_pos = str.rfind(target);
         if (start_pos == std::string::npos)
         {
             return false;
         }
 
-        str.replace(start_pos, from.length(), to);
+        str.replace(start_pos, target.length(), replecament);
         return true;
     }
 
-    static void replace_all(std::string & str, const std::string & from, const std::string & to)
+    /**
+     * \brief Replaces (in-place) all occurances of target with replacement.
+     *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
+     * \param str - input std::string that will be modified.
+     * \param target - substring that will be replaced with replacement.
+     * \param replecament - substring that will replace target.
+     * \return True if replacement was successfull, false otherwise.
+     */
+    static bool replace_all(std::string & str, const std::string & target, const std::string & replecament)
     {
-        if (from.empty())
+        if (target.empty())
         {
-            return;
+            return false;
         }
 
         size_t start_pos = 0;
-        while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+        const bool found_substring = str.find(target, start_pos) != std::string::npos;
+
+        while ((start_pos = str.find(target, start_pos)) != std::string::npos)
         {
-            str.replace(start_pos, from.length(), to);
-            start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+            str.replace(start_pos, target.length(), replecament);
+            start_pos += replecament.length();
         }
+
+        return found_substring;
     }
 
+    /**
+     * \brief Checks if std::string str ends with specified suffix.
+     * \param str - input std::string that will be checked.
+     * \param suffix - searched suffix in str.
+     * \return True if suffix was found, false otherwise.
+     */
     static bool ends_with(const std::string & str, const std::string & suffix)
     {
         const auto pos = str.rfind(suffix);
@@ -159,12 +237,24 @@ namespace strutil
         return (pos != std::string::npos) && (pos == (str.length() - suffix.length()));
     }
 
+    /**
+     * \brief Checks if std::string str starts with specified prefix.
+     * \param str - input std::string that will be checked.
+     * \param prefix - searched prefix in str.
+     * \return True if prefix was found, false otherwise.
+     */
     static bool starts_with(const std::string & str, const std::string & prefix)
     {
         return str.find(prefix) == 0;
     }
 
-    static std::vector<std::string> split(const std::string & str, char delim)
+    /**
+     * \brief Splits input std::string str according to input delim.
+     * \param str - std::string that will be splitted.
+     * \param delim - the delimiter.
+     * \return std::vector<std::string> that contains all splitted tokens.
+     */
+    static std::vector<std::string> split(const std::string & str, const char delim)
     {
         std::vector<std::string> tokens;
         std::stringstream ss(str);
@@ -178,13 +268,21 @@ namespace strutil
         return tokens;
     }
 
+    /**
+     * \brief Joins all elements of std::vector tokens of arbitrary datatypes 
+     *        into one std::string with delimiter delim.
+     * \tparam T - arbitrary datatype.
+     * \param tokens - vector of tokens.
+     * \param delim - the delimiter.
+     * \return std::string with joined elements of vector tokens with delimiter delim.
+     */
     template<typename T>
-    static std::string join(const std::vector<T> & v, const std::string & delim)
+    static std::string join(const std::vector<T> & tokens, const std::string & delim)
     {
         std::ostringstream result;
-        for(auto it = v.begin(); it != v.end(); ++it)
+        for(auto it = tokens.begin(); it != tokens.end(); ++it)
         {
-            if(it != v.begin())
+            if(it != tokens.begin())
             {
                 result << delim;
             }
@@ -195,6 +293,12 @@ namespace strutil
         return result.str();
     }
 
+    /**
+     * \brief Creates new std::string with repeated n times substring str.
+     * \param str - substring that needs to be repeated.
+     * \param n - number of iterations.
+     * \return std::string with repeated substring str.
+     */
     static std::string repeat(const std::string & str, unsigned n)
     {
         std::string result;
@@ -207,16 +311,34 @@ namespace strutil
         return result;
     }
 
+    /**
+     * \brief Creates new std::string with repeated n times char c.
+     * \param c - char that needs to be repeated.
+     * \param n - number of iterations.
+     * \return std::string with repeated char c.
+     */
     static std::string repeat(char c, unsigned n)
     {
         return std::string(n, c);
     }
 
+    /**
+     * \brief Checks if input std::string str contains specified substring.
+     * \param str - std::string to be checked.
+     * \param substring - searched substring.
+     * \return True if substring was found in str, false otherwise.
+     */
     static bool contains(const std::string & str, const std::string & substring)
     {
         return str.find(substring) != std::string::npos;
     }
 
+    /**
+     * \brief Checks if input std::string str matches specified reular expression regex.
+     * \param str - std::string to be checked.
+     * \param regex - the std::regex regular expression.
+     * \return True if regex matches str, false otherwise.
+     */
     static bool matches(const std::string & str, const std::regex & regex)
     {
         return std::regex_match(str, regex);
