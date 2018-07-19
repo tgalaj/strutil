@@ -1,9 +1,22 @@
-/**
+/*
  * strutil v1.0 - header-only string utility library 
  * 
  * Copyright (C) 2018 Tomasz Ga³aj
  */
 
+ /**
+ ******************************************************************************
+ *
+ *  @mainpage strutil documentation
+ *  @see https://github.com/Shot511/strutil
+ * 
+ *  @copyright  Copyright (C) 2018 Tomasz Ga³aj
+ *  @file       strutil.h
+ *  @brief     Library public interface header
+ *
+ ******************************************************************************
+ */
+ 
 #pragma once
 
 #include <algorithm>
@@ -13,14 +26,15 @@
 #include <string>
 #include <vector>
 
+//! The strutil namespace
 namespace strutil
 {
     /**
-     * \brief Converts any datatype into std::string. 
+     * @brief Converts any datatype into std::string. 
      *        Datatype must support << operator.
-     * \tparam T
-     * \param value - will be converted into std::string.
-     * \return Converted value as std::string.
+     * @tparam T
+     * @param value - will be converted into std::string.
+     * @return Converted value as std::string.
      */
     template<typename T>
     static inline std::string to_string(T value)
@@ -32,11 +46,11 @@ namespace strutil
     }
 
     /**
-     * \brief Converts std::string into any datatype.
+     * @brief Converts std::string into any datatype.
      *        Datatype must support << operator.
-     * \tparam T
-     * \param str - std::string that will be converted into datatype T.
-     * \return Variable of datatype T.
+     * @tparam T
+     * @param str - std::string that will be converted into datatype T.
+     * @return Variable of datatype T.
      */
     template<typename T>
     static inline T parse_string(const std::string & str)
@@ -48,9 +62,9 @@ namespace strutil
     }
 
     /**
-     * \brief Converts std::string to lower case.
-     * \param str - std::string that needs to be converted.
-     * \return Lower case input std::string.
+     * @brief Converts std::string to lower case.
+     * @param str - std::string that needs to be converted.
+     * @return Lower case input std::string.
      */
     static inline std::string to_lower(const std::string & str)
     {
@@ -64,9 +78,9 @@ namespace strutil
     }
 
     /**
-     * \brief Converts std::string to upper case.
-     * \param str - std::string that needs to be converted.
-     * \return Upper case input std::string.
+     * @brief Converts std::string to upper case.
+     * @param str - std::string that needs to be converted.
+     * @return Upper case input std::string.
      */
     static inline std::string to_upper(const std::string & str)
     {
@@ -80,10 +94,10 @@ namespace strutil
     }
 
     /**
-     * \brief Compares two std::strings ignoring their case (lower/upper).
-     * \param str1 - std::string to compare
-     * \param str2 - std::string to compare
-     * \return True if str1 and str2 are equal, false otherwise.
+     * @brief Compares two std::strings ignoring their case (lower/upper).
+     * @param str1 - std::string to compare
+     * @param str2 - std::string to compare
+     * @return True if str1 and str2 are equal, false otherwise.
      */
     static inline bool compare_ignore_case(const std::string & str1, const std::string & str2)
     {
@@ -91,9 +105,9 @@ namespace strutil
     }
 
     /**
-     * \brief Trims (in-place) white spaces from the left side of std::string.
+     * @brief Trims (in-place) white spaces from the left side of std::string.
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-     * \param str - input std::string to remove white spaces from.
+     * @param str - input std::string to remove white spaces from.
      */
     static inline void trim_left(std::string & str)
     {
@@ -101,9 +115,9 @@ namespace strutil
     }
 
     /**
-     * \brief Trims (in-place) white spaces from the right side of std::string.
+     * @brief Trims (in-place) white spaces from the right side of std::string.
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-     * \param str - input std::string to remove white spaces from.
+     * @param str - input std::string to remove white spaces from.
      */
     static inline void trim_right(std::string & str)
     {
@@ -111,9 +125,9 @@ namespace strutil
     }
 
     /**
-     * \brief Trims (in-place) white spaces from the both sides of std::string.
+     * @brief Trims (in-place) white spaces from the both sides of std::string.
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-     * \param str - input std::string to remove white spaces from.
+     * @param str - input std::string to remove white spaces from.
      */
     static inline void trim(std::string & str)
     {
@@ -122,10 +136,10 @@ namespace strutil
     }
 
      /**
-      * \brief Trims white spaces from the left side of std::string.
+      * @brief Trims white spaces from the left side of std::string.
       *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-      * \param str - input std::string to remove white spaces from.
-      * \return Copy of input str with trimmed white spaces.
+      * @param str - input std::string to remove white spaces from.
+      * @return Copy of input str with trimmed white spaces.
       */
     static inline std::string trim_left_copy(std::string str)
     {
@@ -134,10 +148,10 @@ namespace strutil
     }
 
     /**
-      * \brief Trims white spaces from the right side of std::string.
+      * @brief Trims white spaces from the right side of std::string.
       *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-      * \param str - input std::string to remove white spaces from.
-      * \return Copy of input str with trimmed white spaces.
+      * @param str - input std::string to remove white spaces from.
+      * @return Copy of input str with trimmed white spaces.
       */
     static inline std::string trim_right_copy(std::string str)
     {
@@ -146,10 +160,10 @@ namespace strutil
     }
 
     /**
-      * \brief Trims white spaces from the both sides of std::string.
+      * @brief Trims white spaces from the both sides of std::string.
       *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
-      * \param str - input std::string to remove white spaces from.
-      * \return Copy of input str with trimmed white spaces.
+      * @param str - input std::string to remove white spaces from.
+      * @return Copy of input str with trimmed white spaces.
       */
     static inline std::string trim_copy(std::string str)
     {
@@ -158,12 +172,12 @@ namespace strutil
     }
 
     /**
-     * \brief Replaces (in-place) the first occurance of target with replacement.
+     * @brief Replaces (in-place) the first occurance of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
-     * \param str - input std::string that will be modified.
-     * \param target - substring that will be replaced with replacement.
-     * \param replecament - substring that will replace target.
-     * \return True if replacement was successfull, false otherwise.
+     * @param str - input std::string that will be modified.
+     * @param target - substring that will be replaced with replacement.
+     * @param replecament - substring that will replace target.
+     * @return True if replacement was successfull, false otherwise.
      */
     static inline bool replace_first(std::string & str, const std::string & target, const std::string & replecament)
     {
@@ -178,12 +192,12 @@ namespace strutil
     }
 
     /**
-     * \brief Replaces (in-place) last occurance of target with replacement.
+     * @brief Replaces (in-place) last occurance of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
-     * \param str - input std::string that will be modified.
-     * \param target - substring that will be replaced with replacement.
-     * \param replecament - substring that will replace target.
-     * \return True if replacement was successfull, false otherwise.
+     * @param str - input std::string that will be modified.
+     * @param target - substring that will be replaced with replacement.
+     * @param replecament - substring that will replace target.
+     * @return True if replacement was successfull, false otherwise.
      */
     static inline bool replace_last(std::string & str, const std::string & target, const std::string & replecament)
     {
@@ -198,12 +212,12 @@ namespace strutil
     }
 
     /**
-     * \brief Replaces (in-place) all occurances of target with replacement.
+     * @brief Replaces (in-place) all occurances of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
-     * \param str - input std::string that will be modified.
-     * \param target - substring that will be replaced with replacement.
-     * \param replecament - substring that will replace target.
-     * \return True if replacement was successfull, false otherwise.
+     * @param str - input std::string that will be modified.
+     * @param target - substring that will be replaced with replacement.
+     * @param replecament - substring that will replace target.
+     * @return True if replacement was successfull, false otherwise.
      */
     static inline bool replace_all(std::string & str, const std::string & target, const std::string & replecament)
     {
@@ -225,10 +239,10 @@ namespace strutil
     }
 
     /**
-     * \brief Checks if std::string str ends with specified suffix.
-     * \param str - input std::string that will be checked.
-     * \param suffix - searched suffix in str.
-     * \return True if suffix was found, false otherwise.
+     * @brief Checks if std::string str ends with specified suffix.
+     * @param str - input std::string that will be checked.
+     * @param suffix - searched suffix in str.
+     * @return True if suffix was found, false otherwise.
      */
     static inline bool ends_with(const std::string & str, const std::string & suffix)
     {
@@ -238,10 +252,10 @@ namespace strutil
     }
 
     /**
-     * \brief Checks if std::string str starts with specified prefix.
-     * \param str - input std::string that will be checked.
-     * \param prefix - searched prefix in str.
-     * \return True if prefix was found, false otherwise.
+     * @brief Checks if std::string str starts with specified prefix.
+     * @param str - input std::string that will be checked.
+     * @param prefix - searched prefix in str.
+     * @return True if prefix was found, false otherwise.
      */
     static inline bool starts_with(const std::string & str, const std::string & prefix)
     {
@@ -249,10 +263,10 @@ namespace strutil
     }
 
     /**
-     * \brief Splits input std::string str according to input delim.
-     * \param str - std::string that will be splitted.
-     * \param delim - the delimiter.
-     * \return std::vector<std::string> that contains all splitted tokens.
+     * @brief Splits input std::string str according to input delim.
+     * @param str - std::string that will be splitted.
+     * @param delim - the delimiter.
+     * @return std::vector<std::string> that contains all splitted tokens.
      */
     static inline std::vector<std::string> split(const std::string & str, const char delim)
     {
@@ -269,12 +283,12 @@ namespace strutil
     }
 
     /**
-     * \brief Joins all elements of std::vector tokens of arbitrary datatypes 
+     * @brief Joins all elements of std::vector tokens of arbitrary datatypes 
      *        into one std::string with delimiter delim.
-     * \tparam T - arbitrary datatype.
-     * \param tokens - vector of tokens.
-     * \param delim - the delimiter.
-     * \return std::string with joined elements of vector tokens with delimiter delim.
+     * @tparam T - arbitrary datatype.
+     * @param tokens - vector of tokens.
+     * @param delim - the delimiter.
+     * @return std::string with joined elements of vector tokens with delimiter delim.
      */
     template<typename T>
     static inline std::string join(const std::vector<T> & tokens, const std::string & delim)
@@ -294,10 +308,10 @@ namespace strutil
     }
 
     /**
-     * \brief Creates new std::string with repeated n times substring str.
-     * \param str - substring that needs to be repeated.
-     * \param n - number of iterations.
-     * \return std::string with repeated substring str.
+     * @brief Creates new std::string with repeated n times substring str.
+     * @param str - substring that needs to be repeated.
+     * @param n - number of iterations.
+     * @return std::string with repeated substring str.
      */
     static inline std::string repeat(const std::string & str, unsigned n)
     {
@@ -312,10 +326,10 @@ namespace strutil
     }
 
     /**
-     * \brief Creates new std::string with repeated n times char c.
-     * \param c - char that needs to be repeated.
-     * \param n - number of iterations.
-     * \return std::string with repeated char c.
+     * @brief Creates new std::string with repeated n times char c.
+     * @param c - char that needs to be repeated.
+     * @param n - number of iterations.
+     * @return std::string with repeated char c.
      */
     static inline std::string repeat(char c, unsigned n)
     {
@@ -323,10 +337,10 @@ namespace strutil
     }
 
     /**
-     * \brief Checks if input std::string str contains specified substring.
-     * \param str - std::string to be checked.
-     * \param substring - searched substring.
-     * \return True if substring was found in str, false otherwise.
+     * @brief Checks if input std::string str contains specified substring.
+     * @param str - std::string to be checked.
+     * @param substring - searched substring.
+     * @return True if substring was found in str, false otherwise.
      */
     static inline bool contains(const std::string & str, const std::string & substring)
     {
@@ -334,10 +348,10 @@ namespace strutil
     }
 
     /**
-     * \brief Checks if input std::string str matches specified reular expression regex.
-     * \param str - std::string to be checked.
-     * \param regex - the std::regex regular expression.
-     * \return True if regex matches str, false otherwise.
+     * @brief Checks if input std::string str matches specified reular expression regex.
+     * @param str - std::string to be checked.
+     * @param regex - the std::regex regular expression.
+     * @return True if regex matches str, false otherwise.
      */
     static inline bool matches(const std::string & str, const std::regex & regex)
     {
