@@ -193,7 +193,7 @@ TEST(Parsing, string_to_double)
 
 TEST(Parsing, string_to_long_double)
 {
-    EXPECT_EQ(-5.245, strutil::parse_string<long double>("-5.245"));
+    EXPECT_EQ(-5.245L, strutil::parse_string<long double>("-5.245"));
 }
 
 TEST(Parsing, string_to_bool)
@@ -346,6 +346,15 @@ TEST(TextManip, no_replace_all)
 {
     std::string str1 = "This is $name and that is also $name.";
     bool res = strutil::replace_last(str1, "$name$", "Jon Doe");
+
+    EXPECT_EQ(false, res);
+    EXPECT_EQ("This is $name and that is also $name.", str1);
+}
+
+TEST(TextManip, replace_all_target_empty)
+{
+    std::string str1 = "This is $name and that is also $name.";
+    bool res = strutil::replace_all(str1, "", "Jon Doe");
 
     EXPECT_EQ(false, res);
     EXPECT_EQ("This is $name and that is also $name.", str1);

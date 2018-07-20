@@ -1,4 +1,6 @@
+dist: trusty
 sudo: false
+# language: cpp
 
 branches:
   only:
@@ -6,11 +8,23 @@ branches:
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test 
     packages:
       - doxygen
+      - g++-6
 
+before_install:
+  - pip install --user cpp-coveralls
+      
 script:
   - doxygen Doxyfile
+  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6 cmake -DCOVERAGE=1 .
+  - cmake --build .
+  - ./strutil-tests
+  
+after_success:
+  - coveralls --root . -E ".*googletest.*" -E ".*CMakeFiles.*"
 
 deploy:
   provider: pages

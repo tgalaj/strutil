@@ -23,6 +23,8 @@ endif()
 # settings on Windows
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
+set(COVERAGE OFF CACHE BOOL "Coverage")
+
 # Add googletest directly to our build. This defines
 # the gtest and gtest_main targets.
 add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
@@ -38,6 +40,12 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(${PROJECT_NAME} tests/strutil_tests.cpp tests/test_cases.cpp strutil.h)
-target_link_libraries(${PROJECT_NAME} gtest_main)
+
+if (COVERAGE)
+    target_compile_options(${PROJECT_NAME} PRIVATE --coverage)
+    target_link_libraries(${PROJECT_NAME} PUBLIC gtest_main PRIVATE --coverage)
+else()
+	target_link_libraries(${PROJECT_NAME} gtest_main)
+endif()
 
 # add_test(NAME example_test COMMAND ${PROJECT_NAME})
