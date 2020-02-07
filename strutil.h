@@ -1,7 +1,7 @@
 /*
  * strutil v1.0 - header-only string utility library 
  * 
- * Copyright (C) 2018 Tomasz Ga³aj
+ * Copyright (C) 2020 Tomasz GaÂ³aj & SomeRandomDev49
  */
 
  /**
@@ -10,9 +10,9 @@
  *  @mainpage strutil documentation
  *  @see https://github.com/Shot511/strutil
  * 
- *  @copyright  Copyright (C) 2018 Tomasz Ga³aj
+ *  @copyright  Copyright (C) 2020 Tomasz GaÂ³aj & SomeRandomDev49
  *  @file       strutil.h
- *  @brief     Library public interface header
+ *  @brief      Library public interface header
  *
  ******************************************************************************
  */
@@ -279,6 +279,28 @@ namespace strutil
             tokens.push_back(token);
         }
 
+        return tokens;
+    }
+ 
+    /**
+     * @brief Splits input std::string str according to input std::string delim.
+     *        Taken from: https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c.
+     * @param str - std::string that will be splitted.
+     * @param delim - the delimiter.
+     * @return std::vector<std::string> that contains all splitted tokens.
+     */
+    static inline std::vector<std::string> split(const std::string &str, const std::string &delim)
+    {
+        std::vector<std::string> tokens;
+
+        size_t pos = 0;
+        std::string token;
+        while ((pos = str.find(delim)) != std::string::npos) {
+            token = str.substr(0, pos);
+            tokens.push_back(token);
+            str.erase(0, pos + delim.length());
+        }
+        tokens.push_back(str);
         return tokens;
     }
 
