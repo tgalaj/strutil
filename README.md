@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Shot511/strutil.svg?branch=master)](https://travis-ci.org/Shot511/strutil)
+[![Build Status](https://travis-ci.com/Shot511/strutil.svg?branch=master)](https://travis-ci.com/Shot511/strutil)
 [![Coverage Status](https://coveralls.io/repos/github/Shot511/strutil/badge.svg?branch=master)](https://coveralls.io/github/Shot511/strutil?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
