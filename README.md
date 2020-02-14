@@ -40,3 +40,6 @@ mkdir build
 cd build
 cmake ..
 ```
+
+## Thanks for contribution
+* SomeRandomDev49

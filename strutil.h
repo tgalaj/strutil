@@ -1,5 +1,5 @@
 /*
- * strutil v1.1 - header-only string utility library 
+ * strutil v1.0.1 - header-only string utility library 
  * 
  * Copyright (C) 2020 Tomasz Galaj & SomeRandomDev49
  */
