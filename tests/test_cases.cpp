@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Tomasz Ga³aj
+ * Copyright (C) 2020 Tomasz Galaj
  */
 
 #include <gtest/gtest.h>
@@ -210,12 +210,27 @@ TEST(Parsing, string_to_neg_bool)
 * Splitting and tokenizing
 */
 
-TEST(Splitting, split)
+TEST(Splitting, split_char_delim)
 {
-    std::string str1 = "Col1;Col2;Col3";
+    std::string str1 = "asdf;asdfgh;asdfghjk";
 
     std::vector<std::string> res = strutil::split(str1, ';');
-    std::vector<std::string> expected = { "Col1", "Col2", "Col3" };
+    std::vector<std::string> expected = { "asdf", "asdfgh", "asdfghjk" };
+
+    ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
+
+    for (unsigned i = 0; i < res.size(); ++i)
+    {
+        EXPECT_EQ(expected[i], res[i]) << "Vectors differ at index " << i;
+    }
+}
+
+TEST(Splitting, split_string_delim)
+{
+    std::string str1 = "asdf>=asdfgh>=asdfghjk";
+
+    std::vector<std::string> res = strutil::split(str1, ">=");
+    std::vector<std::string> expected = { "asdf", "asdfgh", "asdfghjk" };
 
     ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
 

@@ -1,7 +1,7 @@
 /*
- * strutil v1.0 - header-only string utility library 
+ * strutil v1.1 - header-only string utility library 
  * 
- * Copyright (C) 2018 Tomasz Ga³aj
+ * Copyright (C) 2020 Tomasz Galaj & SomeRandomDev49
  */
 
  /**
@@ -10,9 +10,9 @@
  *  @mainpage strutil documentation
  *  @see https://github.com/Shot511/strutil
  * 
- *  @copyright  Copyright (C) 2018 Tomasz Ga³aj
+ *  @copyright  Copyright (C) 2020 Tomasz Galaj & SomeRandomDev49
  *  @file       strutil.h
- *  @brief     Library public interface header
+ *  @brief      Library public interface header
  *
  ******************************************************************************
  */
@@ -279,6 +279,30 @@ namespace strutil
             tokens.push_back(token);
         }
 
+        return tokens;
+    }
+ 
+    /**
+     * @brief Splits input std::string str according to input std::string delim.
+     *        Taken from: https://stackoverflow.com/a/46931770/1892346.
+     * @param str - std::string that will be splitted.
+     * @param delim - the delimiter.
+     * @return std::vector<std::string> that contains all splitted tokens.
+     */
+    static inline std::vector<std::string> split(const std::string & str, const std::string & delim)
+    {
+        size_t pos_start = 0, pos_end, delim_len = delim.length();
+        std::string token;
+        std::vector<std::string> tokens;
+
+        while ((pos_end = str.find(delim, pos_start)) != std::string::npos) 
+        {
+            token = str.substr(pos_start, pos_end - pos_start);
+            pos_start = pos_end + delim_len;
+            tokens.push_back(token);
+        }
+
+        tokens.push_back(str.substr(pos_start));
         return tokens;
     }
 
