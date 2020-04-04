@@ -64,10 +64,16 @@ TEST(Compare, ends_with_char)
     EXPECT_EQ(false, strutil::ends_with("", 'm'));
 }
 
-TEST(Compare, contains)
+TEST(Compare, contains_str)
 {
     EXPECT_EQ(true, strutil::contains("DiffuseTexture_m", "fuse"));
     EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", "fuser"));
+}
+
+TEST(Compare, contains_char)
+{
+    EXPECT_EQ(true, strutil::contains("DiffuseTexture_m", 'f'));
+    EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", 'z'));
 }
 
 TEST(Compare, matches)
@@ -320,6 +326,51 @@ TEST(Splitting, split_string_delim)
     {
         EXPECT_EQ(expected[i], res[i]);
     }
+}
+
+TEST(Splitting, split_any)
+{
+    std::vector<std::string> res;
+
+    // Basic usage
+    res = strutil::split_any("abc,def|ghi jkl", ",| ");
+    ASSERT_EQ(res.size(), 4);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "def");
+    EXPECT_EQ(res[2], "ghi");
+    EXPECT_EQ(res[3], "jkl");
+
+    // Empty input => empty string
+    ASSERT_EQ(strutil::split_any("", ",:")[0], "");
+
+    // No matches => original string
+    res = strutil::split_any("abc_123", ",; ");
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], "abc_123");
+
+    // Empty delimiters => original string
+    res = strutil::split_any("abc;def", "");
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], "abc;def");
+
+    // Leading delimiters => leading empty string
+    res = strutil::split_any(";abc", ",; ");
+    ASSERT_EQ(res.size(), 2);
+    ASSERT_EQ(res[0], "");
+    ASSERT_EQ(res[1], "abc");
+
+    // Trailing delimiters => trailing empty string
+    res = strutil::split_any("abc;", ",; ");
+    ASSERT_EQ(res.size(), 2);
+    ASSERT_EQ(res[0], "abc");
+    ASSERT_EQ(res[1], "");
+
+    // Consecutive delimiters => repeated empty strings
+    res = strutil::split_any("abc,;123", ",;");
+    ASSERT_EQ(res.size(), 3);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "");
+    EXPECT_EQ(res[2], "123");
 }
 
 TEST(Splitting, join)

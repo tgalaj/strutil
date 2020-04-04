@@ -94,6 +94,28 @@ namespace strutil
     }
 
     /**
+     * @brief Checks if input std::string str contains specified substring.
+     * @param str - std::string to be checked.
+     * @param substring - searched substring.
+     * @return True if substring was found in str, false otherwise.
+     */
+    static inline bool contains(const std::string & str, const std::string & substring)
+    {
+        return str.find(substring) != std::string::npos;
+    }
+
+    /**
+     * @brief Checks if input std::string str contains specified character.
+     * @param str - std::string to be checked.
+     * @param character - searched character.
+     * @return True if character was found in str, false otherwise.
+     */
+    static inline bool contains(const std::string & str, const char character)
+    {
+        return contains(str, std::string(1,character));
+    }
+
+    /**
      * @brief Compares two std::strings ignoring their case (lower/upper).
      * @param str1 - std::string to compare
      * @param str2 - std::string to compare
@@ -312,7 +334,7 @@ namespace strutil
     /**
      * @brief Splits input std::string str according to input std::string delim.
      *        Taken from: https://stackoverflow.com/a/46931770/1892346.
-     * @param str - std::string that will be splitted.
+     * @param str - std::string that will be split.
      * @param delim - the delimiter.
      * @return std::vector<std::string> that contains all splitted tokens.
      */
@@ -327,6 +349,30 @@ namespace strutil
             token = str.substr(pos_start, pos_end - pos_start);
             pos_start = pos_end + delim_len;
             tokens.push_back(token);
+        }
+
+        tokens.push_back(str.substr(pos_start));
+        return tokens;
+    }
+
+    /**
+     * @brief Splits input string using any delimiter in the given set.
+     * @param str - std::string that will be split.
+     * @param delims - the set of delimiter characters.
+     * @return vector of resulting tokens.
+     */
+    static inline std::vector<std::string> split_any(const std::string & str, const std::string & delims)
+    {
+        std::string token;
+        std::vector<std::string> tokens;
+
+        size_t pos_start = 0;
+        for (size_t pos_end = 0; pos_end < str.length(); ++pos_end) {
+            if (contains(delims, str[pos_end])) {
+                token = str.substr(pos_start, pos_end - pos_start);
+                tokens.push_back(token);
+                pos_start = pos_end + 1;
+            }
         }
 
         tokens.push_back(str.substr(pos_start));
@@ -385,17 +431,6 @@ namespace strutil
     static inline std::string repeat(char c, unsigned n)
     {
         return std::string(n, c);
-    }
-
-    /**
-     * @brief Checks if input std::string str contains specified substring.
-     * @param str - std::string to be checked.
-     * @param substring - searched substring.
-     * @return True if substring was found in str, false otherwise.
-     */
-    static inline bool contains(const std::string & str, const std::string & substring)
-    {
-        return str.find(substring) != std::string::npos;
     }
 
     /**
