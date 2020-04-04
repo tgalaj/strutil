@@ -20,22 +20,48 @@ TEST(Compare, compare_ignore_case)
     EXPECT_EQ(false, strutil::compare_ignore_case(str2, str3));
 }
 
-TEST(Compare, starts_with)
+TEST(Compare, starts_with_str)
 {
     EXPECT_EQ(true, strutil::starts_with("m_DiffuseTexture", "m_"));
     EXPECT_EQ(true, strutil::starts_with("This is a simple test case", "This "));
 
     EXPECT_EQ(false, strutil::starts_with("p_DiffuseTexture", "m_"));
     EXPECT_EQ(false, strutil::starts_with("This is a simple test case", "his "));
+
+    EXPECT_EQ(false, strutil::starts_with("", "m_"));
 }
 
-TEST(Compare, ends_with)
+TEST(Compare, starts_with_char)
+{
+    EXPECT_EQ(true, strutil::starts_with("m_DiffuseTexture", 'm'));
+    EXPECT_EQ(true, strutil::starts_with("This is a simple test case", 'T'));
+
+    EXPECT_EQ(false, strutil::starts_with("p_DiffuseTexture", 'm'));
+    EXPECT_EQ(false, strutil::starts_with("This is a simple test case", 'h'));
+
+    EXPECT_EQ(false, strutil::starts_with("", 'm'));
+}
+
+TEST(Compare, ends_with_str)
 {
     EXPECT_EQ(true, strutil::ends_with("DiffuseTexture_m", "_m"));
     EXPECT_EQ(true, strutil::ends_with("This is a simple test case", " test case"));
 
     EXPECT_EQ(false, strutil::ends_with("DiffuseTexture_p", "_m"));
     EXPECT_EQ(false, strutil::ends_with("This is a simple test case", "test cas"));
+
+    EXPECT_EQ(false, strutil::ends_with("", "_m"));
+}
+
+TEST(Compare, ends_with_char)
+{
+    EXPECT_EQ(true, strutil::ends_with("DiffuseTexture_m", 'm'));
+    EXPECT_EQ(true, strutil::ends_with("This is a simple test case", 'e'));
+
+    EXPECT_EQ(false, strutil::ends_with("DiffuseTexture_p", 'm'));
+    EXPECT_EQ(false, strutil::ends_with("This is a simple test case", 's'));
+
+    EXPECT_EQ(false, strutil::ends_with("", 'm'));
 }
 
 TEST(Compare, contains)
@@ -213,30 +239,86 @@ TEST(Parsing, string_to_neg_bool)
 TEST(Splitting, split_char_delim)
 {
     std::string str1 = "asdf;asdfgh;asdfghjk";
-
     std::vector<std::string> res = strutil::split(str1, ';');
     std::vector<std::string> expected = { "asdf", "asdfgh", "asdfghjk" };
-
     ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
-
     for (unsigned i = 0; i < res.size(); ++i)
     {
         EXPECT_EQ(expected[i], res[i]) << "Vectors differ at index " << i;
+    }
+
+    // Empty input => empty string
+    res = strutil::split("", ';');
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], "");
+
+    // No matches => original string
+    res = strutil::split(str1, ',');
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], str1);
+
+    // Leading delimiter => leading empty string
+    res = strutil::split(";abc", ';');
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "");
+    EXPECT_EQ(res[1], "abc");
+
+    // Trailing delimiter => trailing empty string
+    res = strutil::split("abc;", ';');
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "");
+
+    // Repeated delimiters => repeated empty strings
+    res = strutil::split("abc;;;def", ';');
+    expected = { "abc", "", "", "def" };
+    ASSERT_EQ(res.size(), expected.size());
+    for (unsigned i = 0; i < res.size(); ++i)
+    {
+        EXPECT_EQ(expected[i], res[i]);
     }
 }
 
 TEST(Splitting, split_string_delim)
 {
     std::string str1 = "asdf>=asdfgh>=asdfghjk";
-
     std::vector<std::string> res = strutil::split(str1, ">=");
     std::vector<std::string> expected = { "asdf", "asdfgh", "asdfghjk" };
-
     ASSERT_EQ(res.size(), expected.size()) << "Vectors are of unequal length";
-
     for (unsigned i = 0; i < res.size(); ++i)
     {
         EXPECT_EQ(expected[i], res[i]) << "Vectors differ at index " << i;
+    }
+
+    // Empty input => empty string
+    res = strutil::split("", ">=");
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], "");
+
+    // No matches => original string
+    res = strutil::split(str1, "<>");
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], str1);
+
+    // Leading delimiter => leading empty string
+    res = strutil::split(">=abc", ">=");
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "");
+    EXPECT_EQ(res[1], "abc");
+
+    // Trailing delimiter => trailing empty string
+    res = strutil::split("abc>=", ">=");
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "");
+
+    // Repeated delimiters => repeated empty strings
+    res = strutil::split("abc>=>=>=def", ">=");
+    expected = { "abc", "", "", "def" };
+    ASSERT_EQ(res.size(), expected.size());
+    for (unsigned i = 0; i < res.size(); ++i)
+    {
+        EXPECT_EQ(expected[i], res[i]);
     }
 }
 

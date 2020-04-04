@@ -1,6 +1,6 @@
 /*
- * strutil v1.0.1 - header-only string utility library 
- * 
+ * strutil v1.0.1 - header-only string utility library
+ *
  * Copyright (C) 2020 Tomasz Galaj & SomeRandomDev49
  */
 
@@ -9,14 +9,14 @@
  *
  *  @mainpage strutil documentation
  *  @see https://github.com/Shot511/strutil
- * 
+ *
  *  @copyright  Copyright (C) 2020 Tomasz Galaj & SomeRandomDev49
  *  @file       strutil.h
  *  @brief      Library public interface header
  *
  ******************************************************************************
  */
- 
+
 #pragma once
 
 #include <algorithm>
@@ -30,7 +30,7 @@
 namespace strutil
 {
     /**
-     * @brief Converts any datatype into std::string. 
+     * @brief Converts any datatype into std::string.
      *        Datatype must support << operator.
      * @tparam T
      * @param value - will be converted into std::string.
@@ -252,6 +252,17 @@ namespace strutil
     }
 
     /**
+     * @brief Checks if std::string str ends with specified character.
+     * @param str - input std::string that will be checked.
+     * @param suffix - searched character in str.
+     * @return True if ends with character, false otherwise.
+     */
+    static inline bool ends_with(const std::string & str, const char suffix)
+    {
+        return (str.size() > 0) && (*(str.end()-1) == suffix);
+    }
+
+    /**
      * @brief Checks if std::string str starts with specified prefix.
      * @param str - input std::string that will be checked.
      * @param prefix - searched prefix in str.
@@ -260,6 +271,17 @@ namespace strutil
     static inline bool starts_with(const std::string & str, const std::string & prefix)
     {
         return str.find(prefix) == 0;
+    }
+
+    /**
+     * @brief Checks if std::string str starts with specified character.
+     * @param str - input std::string that will be checked.
+     * @param prefix - searched character in str.
+     * @return True if starts with character, false otherwise.
+     */
+    static inline bool starts_with(const std::string & str, const char prefix)
+    {
+        return (str.size() > 0) && (str[0] == prefix);
     }
 
     /**
@@ -279,9 +301,14 @@ namespace strutil
             tokens.push_back(token);
         }
 
+        // Match semantics of split(str,str)
+        if (str.size() == 0 || ends_with(str, delim)) {
+            tokens.push_back("");
+        }
+
         return tokens;
     }
- 
+
     /**
      * @brief Splits input std::string str according to input std::string delim.
      *        Taken from: https://stackoverflow.com/a/46931770/1892346.
@@ -295,7 +322,7 @@ namespace strutil
         std::string token;
         std::vector<std::string> tokens;
 
-        while ((pos_end = str.find(delim, pos_start)) != std::string::npos) 
+        while ((pos_end = str.find(delim, pos_start)) != std::string::npos)
         {
             token = str.substr(pos_start, pos_end - pos_start);
             pos_start = pos_end + delim_len;
@@ -307,7 +334,7 @@ namespace strutil
     }
 
     /**
-     * @brief Joins all elements of std::vector tokens of arbitrary datatypes 
+     * @brief Joins all elements of std::vector tokens of arbitrary datatypes
      *        into one std::string with delimiter delim.
      * @tparam T - arbitrary datatype.
      * @param tokens - vector of tokens.
