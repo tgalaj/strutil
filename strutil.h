@@ -405,6 +405,28 @@ namespace strutil
     }
 
     /**
+     * @brief Inplace removal of all empty strings in a vector<string>
+     * @param tokens - vector of strings.
+     */
+    static inline void drop_empty(std::vector<std::string> & tokens)
+    {
+        auto last = std::remove_if(tokens.begin(), tokens.end(),
+                                   [](const std::string& s){ return s.size() == 0; });
+        tokens.erase(last, tokens.end());
+    }
+
+    /**
+     * @brief Inplace removal of all empty strings in a vector<string>
+     * @param tokens - vector of strings.
+     * @return vector of non-empty tokens.
+     */
+    static inline std::vector<std::string> drop_empty_copy(std::vector<std::string> tokens)
+    {
+        drop_empty(tokens);
+        return tokens;
+    }
+
+    /**
      * @brief Creates new std::string with repeated n times substring str.
      * @param str - substring that needs to be repeated.
      * @param n - number of iterations.

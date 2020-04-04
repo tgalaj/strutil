@@ -386,6 +386,26 @@ TEST(Splitting, join)
     EXPECT_EQ(str2, strutil::join<unsigned>(tokens2, "|"));
 }
 
+TEST(Splitting, drop_empty)
+{
+    std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
+    strutil::drop_empty(tokens);
+    ASSERT_EQ(tokens.size(), 3);
+    ASSERT_EQ(tokens[0], "t1");
+    ASSERT_EQ(tokens[1], "t2");
+    ASSERT_EQ(tokens[2], "t4");
+}
+
+TEST(Splitting, drop_empty_copy)
+{
+    std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
+    auto res = strutil::drop_empty_copy(tokens);
+    ASSERT_EQ(res.size(), 3);
+    ASSERT_EQ(res[0], "t1");
+    ASSERT_EQ(res[1], "t2");
+    ASSERT_EQ(res[2], "t4");
+}
+
 /*
  * Text manipulation tests
  */
