@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Tomasz Galaj
+ * Copyright (C) 2020 Tomasz Galaj (Shot511)
  */
 
 #include <gtest/gtest.h>
