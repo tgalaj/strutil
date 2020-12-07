@@ -70,7 +70,7 @@ namespace strutil
         auto result = str;
         std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) -> unsigned char
         {
-            return std::tolower(c);
+            return static_cast<unsigned char>(std::tolower(c));
         });
 
         return result;
@@ -86,7 +86,7 @@ namespace strutil
         auto result = str;
         std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) -> unsigned char
         {
-            return std::toupper(c);
+            return static_cast<unsigned char>(std::toupper(c));
         });
 
         return result;
