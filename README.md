@@ -41,6 +41,6 @@ cd build
 cmake ..
 ```
 
-## Thanks for contribution
+## Thanks for the contributions
 * SomeRandomDev49
 * flying-tiger
