@@ -373,6 +373,53 @@ TEST(Splitting, split_any)
     EXPECT_EQ(res[2], "123");
 }
 
+TEST(Resplitting, resplit)
+{
+    std::vector<std::string> res;
+
+    // Basic usage
+    res = strutil::resplit("abc,abcd;abce.abcf?", "[,;\\.\\?]+");
+
+    ASSERT_EQ(res.size(), 4);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "abcd");
+    EXPECT_EQ(res[2], "abce");
+    EXPECT_EQ(res[3], "abcf");
+
+    // Empty input => empty string
+    ASSERT_EQ(strutil::resplit("", ",:")[0], "");
+
+    // No matches => original string
+    res = strutil::resplit("abc_123", ",; ");
+    ASSERT_EQ(res.size(), 1);
+    EXPECT_EQ(res[0], "abc_123");
+
+    // Empty delimiters => original string
+    res = strutil::resplit("abc;def", "");
+    ASSERT_EQ(res.size(), 8);
+    EXPECT_EQ(res[0], "");
+    EXPECT_EQ(res[1], "a");
+    EXPECT_EQ(res[2], "b");
+    EXPECT_EQ(res[3], "c");
+    EXPECT_EQ(res[4], ";");
+    EXPECT_EQ(res[5], "d");
+    EXPECT_EQ(res[6], "e");
+    EXPECT_EQ(res[7], "f");
+
+    // Leading delimiters => leading empty string
+    res = strutil::resplit(";abc", ",; ");
+    ASSERT_EQ(res.size(), 1);
+    ASSERT_EQ(res[0], ";abc");
+}
+
+TEST(Resplitting, resplit_map)
+{
+    std::map<std::string, std::string> res;
+
+    // Basic usage
+    strutil::resplit_map("[abc] name = 123;[abd] name = 123;[abe] name = 123;",  res, "\\[([^\\]]+)\\]");
+}
+
 TEST(Splitting, join)
 {
     std::string str1 = "Col1;Col2;Col3";
@@ -418,6 +465,16 @@ TEST(TextManip, to_lower)
 TEST(TextManip, to_upper)
 {
     EXPECT_EQ("HELLO STRUTIL", strutil::to_upper("HeLlo StRUTIL"));
+}
+
+TEST(TextManip, to_capitalize)
+{
+    EXPECT_EQ("HeLlo StRUTIL", strutil::to_capitalize("heLlo StRUTIL"));
+}
+
+TEST(TextManip, to_capitalize_only)
+{
+    EXPECT_EQ("Hello strutil", strutil::to_capitalize_only("HeLlo StRUTIL"));
 }
 
 TEST(TextManip, trim_left_in_place)

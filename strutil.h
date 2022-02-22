@@ -93,6 +93,32 @@ namespace strutil
     }
 
     /**
+     * @brief Converts std::string to capitalize case.
+     * @param str - std::string that needs to be converted.
+     * @return Capitalized case input std::string.
+     */
+    static inline std::string to_capitalize(const std::string & str)
+    {
+        auto result = str;
+        result[0] = std::toupper(result[0]);
+
+        return result;
+    }
+
+    /**
+     * @brief Converts std::string to capitalize case and with only the firsr letter as capitalize.
+     * @param str - std::string that needs to be converted.
+     * @return Capitalized case input std::string.
+     */
+    static inline std::string to_capitalize_only(const std::string & str)
+    {
+        auto result = to_lower(str);
+        result[0] = std::toupper(result[0]);
+
+        return result;
+    }
+
+    /**
      * @brief Checks if input std::string str contains specified substring.
      * @param str - std::string to be checked.
      * @param substring - searched substring.
@@ -352,6 +378,48 @@ namespace strutil
 
         tokens.push_back(str.substr(pos_start));
         return tokens;
+    }
+
+    /**
+     * @brief Splits input string using regex as delimiter.
+     * @param src - std::string that will be split.
+     * @param rgx_str - the set of delimiter characters.
+     * @return vector of resulting tokens.
+     */
+    static inline std::vector<std::string> resplit(const std::string& src, std::string rgx_str) {
+        std::vector<std::string> elems;
+        std::regex rgx(rgx_str);
+        std::sregex_token_iterator iter(src.begin(), src.end(), rgx, -1);
+        std::sregex_token_iterator end;
+        while (iter != end) {
+            elems.push_back(*iter);
+            ++iter;
+        }
+        return elems;
+    }
+
+    /**
+     * @brief Splits input string using regex as delimiter.
+     * @param src - std::string that will be split.
+     * @param dest - map of matched delimiter and those being splitted.
+     * @param rgx_str - the set of delimiter characters.
+     * @return True if the parsing is successfully done.
+     */
+    static inline bool resplit_map(const std::string& src, std::map<std::string, std::string>& dest,
+                std::string rgx_str) {
+        std::string tstr = src + " ";
+        std::regex rgx(rgx_str);
+        std::sregex_token_iterator niter(tstr.begin(), tstr.end(), rgx);
+        std::sregex_token_iterator viter(tstr.begin(), tstr.end(), rgx, -1);
+        std::sregex_token_iterator end;
+        ++viter;
+        while (niter != end) {
+            dest[*niter] = *viter;
+            ++niter;
+            ++viter;
+        }
+
+        return true;
     }
 
     /**
