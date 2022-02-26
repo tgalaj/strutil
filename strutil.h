@@ -93,6 +93,32 @@ namespace strutil
     }
 
     /**
+     * @brief Converts the first character of a string to uppercase letter and lowercases all other characters, if any.
+     * @param str - input string to be capitalized.
+     * @return A string with the first letter capitalized and all other characters lowercased. It doesn't modify the input string.
+     */
+    static inline std::string capitalize(const std::string & str)
+    {
+        auto result = str;
+        result[0] = std::toupper(result[0]);
+
+        return result;
+    }
+
+    /**
+     * @brief Converts only the first character of a string to uppercase letter, all other characters stay unchanged.
+     * @param str - input string to be modified.
+     * @return A string with the first letter capitalized. All other characters stay unchanged. It doesn't modify the input string.
+     */
+    static inline std::string capitalize_first_char(const std::string & str)
+    {
+        auto result = to_lower(str);
+        result[0] = std::toupper(result[0]);
+
+        return result;
+    }
+
+    /**
      * @brief Checks if input std::string str contains specified substring.
      * @param str - std::string to be checked.
      * @param substring - searched substring.
@@ -352,6 +378,51 @@ namespace strutil
 
         tokens.push_back(str.substr(pos_start));
         return tokens;
+    }
+
+    /**
+     * @brief Splits input string using regex as a delimiter.
+     * @param src - std::string that will be split.
+     * @param rgx_str - the set of delimiter characters.
+     * @return vector of resulting tokens.
+     */
+    static inline std::vector<std::string> regex_split(const std::string& src, std::string rgx_str)
+    {
+        std::vector<std::string> elems;
+        std::regex rgx(rgx_str);
+        std::sregex_token_iterator iter(src.begin(), src.end(), rgx, -1);
+        std::sregex_token_iterator end;
+        while (iter != end)
+        {
+            elems.push_back(*iter);
+            ++iter;
+        }
+        return elems;
+    }
+
+    /**
+     * @brief Splits input string using regex as a delimiter.
+     * @param src - std::string that will be split.
+     * @param dest - map of matched delimiter and those being splitted.
+     * @param rgx_str - the set of delimiter characters.
+     * @return True if the parsing is successfully done.
+     */
+    static inline std::map<std::string, std::string> regex_split_map(const std::string& src, std::string rgx_str)
+    {
+        std::map<std::string, std::string> dest;
+        std::string tstr = src + " ";
+        std::regex rgx(rgx_str);
+        std::sregex_token_iterator niter(tstr.begin(), tstr.end(), rgx);
+        std::sregex_token_iterator viter(tstr.begin(), tstr.end(), rgx, -1);
+        std::sregex_token_iterator end;
+        ++viter;
+        while (niter != end) {
+            dest[*niter] = *viter;
+            ++niter;
+            ++viter;
+        }
+
+        return dest;
     }
 
     /**
