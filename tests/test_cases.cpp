@@ -78,7 +78,7 @@ TEST(Compare, contains_char)
 
 TEST(Compare, matches)
 {
-    const std::regex check_mail("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+    const std::regex check_mail("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$");
 
     EXPECT_EQ(true, strutil::matches("jon.doe@somehost.com", check_mail));
     EXPECT_EQ(false, strutil::matches("jon.doe@", check_mail));
@@ -373,12 +373,12 @@ TEST(Splitting, split_any)
     EXPECT_EQ(res[2], "123");
 }
 
-TEST(Resplitting, resplit)
+TEST(Regexsplitting, regex_split)
 {
     std::vector<std::string> res;
 
     // Basic usage
-    res = strutil::resplit("abc,abcd;abce.abcf?", "[,;\\.\\?]+");
+    res = strutil::regex_split("abc,abcd;abce.abcf?", "[,;\\.\\?]+");
 
     ASSERT_EQ(res.size(), 4);
     EXPECT_EQ(res[0], "abc");
@@ -387,15 +387,15 @@ TEST(Resplitting, resplit)
     EXPECT_EQ(res[3], "abcf");
 
     // Empty input => empty string
-    ASSERT_EQ(strutil::resplit("", ",:")[0], "");
+    ASSERT_EQ(strutil::regex_split("", ",:")[0], "");
 
     // No matches => original string
-    res = strutil::resplit("abc_123", ",; ");
+    res = strutil::regex_split("abc_123", ",; ");
     ASSERT_EQ(res.size(), 1);
     EXPECT_EQ(res[0], "abc_123");
 
     // Empty delimiters => original string
-    res = strutil::resplit("abc;def", "");
+    res = strutil::regex_split("abc;def", "");
     ASSERT_EQ(res.size(), 8);
     EXPECT_EQ(res[0], "");
     EXPECT_EQ(res[1], "a");
@@ -407,17 +407,28 @@ TEST(Resplitting, resplit)
     EXPECT_EQ(res[7], "f");
 
     // Leading delimiters => leading empty string
-    res = strutil::resplit(";abc", ",; ");
+    res = strutil::regex_split(";abc", ",; ");
     ASSERT_EQ(res.size(), 1);
     ASSERT_EQ(res[0], ";abc");
 }
 
-TEST(Resplitting, resplit_map)
+TEST(Regexsplitting_map, regex_split_map)
 {
-    std::map<std::string, std::string> res;
+    std::map<std::string, std::string> res = strutil::regex_split_map("[abc] name = 123; [abd] name = 123;[abe] name = 123;  ", "\\[[^\\]]+\\]");
+    std::map<std::string, std::string> ans = {
+        {"[abc]", "name = 123;"}, {"[abd]", "name = 123;"}, {"[abe]", "name = 123;"}
+    };
+    for (auto each: res) {
+        ASSERT_EQ(ans.count(each.first), 1);
+        if (ans.count(each.first) == 1)
+        {
+            auto str = each.second;
+            strutil::trim(str);
+            ASSERT_EQ(str, ans[each.first]);
+        }
+    }
 
-    // Basic usage
-    strutil::resplit_map("[abc] name = 123;[abd] name = 123;[abe] name = 123;",  res, "\\[([^\\]]+)\\]");
+    // TODO: More test is to be added.
 }
 
 TEST(Splitting, join)
@@ -467,14 +478,16 @@ TEST(TextManip, to_upper)
     EXPECT_EQ("HELLO STRUTIL", strutil::to_upper("HeLlo StRUTIL"));
 }
 
-TEST(TextManip, to_capitalize)
+TEST(TextManip, capitalize)
 {
-    EXPECT_EQ("HeLlo StRUTIL", strutil::to_capitalize("heLlo StRUTIL"));
+    EXPECT_EQ("HeLlo StRUTIL", strutil::capitalize("heLlo StRUTIL"));
+    EXPECT_EQ("+ is an operator.", strutil::capitalize("+ is an operator."));
 }
 
-TEST(TextManip, to_capitalize_only)
+TEST(TextManip, capitalize_first_char)
 {
-    EXPECT_EQ("Hello strutil", strutil::to_capitalize_only("HeLlo StRUTIL"));
+    EXPECT_EQ("Hello strutil", strutil::capitalize_first_char("HeLlo StRUTIL"));
+    EXPECT_EQ("+ is an operator.", strutil::capitalize_first_char("+ is an operator."));
 }
 
 TEST(TextManip, trim_left_in_place)
