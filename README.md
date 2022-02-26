@@ -44,3 +44,4 @@ cmake ..
 ## Thanks for the contributions
 * SomeRandomDev49
 * flying-tiger
+* zhongjingjogy
