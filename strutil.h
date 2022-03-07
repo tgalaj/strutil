@@ -416,7 +416,8 @@ namespace strutil
         std::sregex_token_iterator viter(tstr.begin(), tstr.end(), rgx, -1);
         std::sregex_token_iterator end;
         ++viter;
-        while (niter != end) {
+        while (niter != end)
+        {
             dest[*niter] = *viter;
             ++niter;
             ++viter;
@@ -437,8 +438,10 @@ namespace strutil
         std::vector<std::string> tokens;
 
         size_t pos_start = 0;
-        for (size_t pos_end = 0; pos_end < str.length(); ++pos_end) {
-            if (contains(delims, str[pos_end])) {
+        for (size_t pos_end = 0; pos_end < str.length(); ++pos_end)
+        {
+            if (contains(delims, str[pos_end]))
+            {
                 token = str.substr(pos_start, pos_end - pos_start);
                 tokens.push_back(token);
                 pos_start = pos_end + 1;
@@ -497,6 +500,33 @@ namespace strutil
     }
 
     /**
+     * @brief Inplace removal of all duplicate strings in a vector<string> where order is not to be maintained
+     *        Taken from: C++ Primer V5
+     * @param tokens - vector of strings.
+     * @return vector of non-duplicate tokens.
+     */
+    static inline void drop_duplicate(std::vector<std::string> &tokens)
+    {
+        std::sort(tokens.begin(), tokens.end());
+        auto end_unique = std::unique(tokens.begin(), tokens.end());
+        tokens.erase(end_unique, tokens.end());
+    }
+
+    /**
+     * @brief Removal of all duplicate strings in a vector<string> where order is not to be maintained
+     *        Taken from: C++ Primer V5
+     * @param tokens - vector of strings.
+     * @return vector of non-duplicate tokens.
+     */
+    static inline std::vector<std::string> drop_duplicate_copy(std::vector<std::string> tokens)
+    {
+        std::sort(tokens.begin(), tokens.end());
+        auto end_unique = std::unique(tokens.begin(), tokens.end());
+        tokens.erase(end_unique, tokens.end());
+        return tokens;
+    }
+
+    /**
      * @brief Creates new std::string with repeated n times substring str.
      * @param str - substring that needs to be repeated.
      * @param n - number of iterations.
@@ -534,5 +564,46 @@ namespace strutil
     static inline bool matches(const std::string & str, const std::regex & regex)
     {
         return std::regex_match(str, regex);
+    }
+
+    /**
+     * @brief Sort input std::vector<std::string> strs in ascending order.
+     * @param strs - std::vector<std::string> to be checked.
+     */
+    template<typename T>
+    static inline void sorting_ascending(std::vector<T> &strs)
+    {
+        std::sort(strs.begin(), strs.end());
+    }
+
+    /**
+     * @brief Sorted input std::vector<std::string> strs in descending order.
+     * @param strs - std::vector<std::string> to be checked.
+     */
+    template<typename T>
+    static inline void sorting_descending(std::vector<T> &strs)
+    {
+        std::sort(strs.begin(),strs.end(), std::greater<T>());
+    }
+
+    /**
+     * @brief Reverse input std::vector<std::string> strs.
+     * @param strs - std::vector<std::string> to be checked.
+     */
+    template<typename T>
+    static inline void reverse_inplace(std::vector<T> &strs)
+    {
+        std::reverse(strs.begin(), strs.end());
+    }
+
+    /**
+     * @brief Reverse input std::vector<std::string> strs.
+     * @param strs - std::vector<std::string> to be checked.
+     */
+    template<typename T>
+    static inline std::vector<T> reverse_copy(std::vector<T> strs)
+    {
+        std::reverse(strs.begin(), strs.end());
+        return strs;
     }
 }
