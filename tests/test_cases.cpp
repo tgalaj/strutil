@@ -464,6 +464,25 @@ TEST(Splitting, drop_empty_copy)
     ASSERT_EQ(res[2], "t4");
 }
 
+TEST(TestDropDuplicate, drop_duplicate)
+{
+    std::vector<std::string> str1 = { "t1", "t2", "", "t4", "", "t1"};
+    strutil::drop_duplicate(str1);
+
+    std::vector<std::string> str2 = { "", "t1", "t2", "t4"};
+
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TestDropDuplicateCopy, drop_duplicate_copy)
+{
+    std::vector<std::string> str1 = { "t1", "t2", "", "t4", "", "t1"};
+    auto str3 = strutil::drop_duplicate_copy(str1);
+    
+    std::vector<std::string> str2 = { "", "t1", "t2", "t4"};
+    EXPECT_EQ(std::equal(str2.cbegin(), str2.cend(), str3.cbegin()), true);
+}
+
 /*
  * Text manipulation tests
  */
@@ -596,4 +615,46 @@ TEST(TextManip, replace_all_target_empty)
 
     EXPECT_EQ(false, res);
     EXPECT_EQ("This is $name and that is also $name.", str1);
+}
+
+TEST(TextSortAscending, sorting_ascending)
+{
+    std::vector<std::string> str1 = {"ABC", "abc", "bcd", "", "-", "  ", "123", "-100"};
+    strutil::sorting_ascending(str1);
+
+    std::vector<std::string> str2 = {"", "  ", "-", "-100", "123", "ABC", "abc", "bcd"};
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TextSortDescending, sorting_descending)
+{
+    std::vector<std::string> str1 = {"ABC", "abc", "bcd", "", "-", "  ", "123", "-100"};
+    strutil::sorting_descending(str1);
+
+    std::vector<std::string> str2 = {"bcd", "abc", "ABC", "123", "-100", "-", "  ", ""};
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TextReverseInplace, reverse_inplace)
+{
+    std::vector<std::string> str1 = {"bcd", "abc", "ABC", "123", "-100", "-", "  ", ""};
+
+    strutil::reverse_inplace(str1);
+
+    std::vector<std::string> str2 = {"", "  ", "-", "-100", "123", "ABC", "abc", "bcd"};
+
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TextReverseCopy, reverse_copy)
+{
+    std::vector<std::string> str1 = {"bcd", "abc", "ABC", "123", "-100", "-", "  ", ""};
+    std::vector<std::string> str3(str1.begin(), str1.end());
+
+    auto str4 = strutil::reverse_copy(str1);
+
+    std::vector<std::string> str2 = {"", "  ", "-", "-100", "123", "ABC", "abc", "bcd"};
+
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str3.cbegin()), true);
+    EXPECT_EQ(std::equal(str4.cbegin(), str4.cend(), str2.cbegin()), true);
 }
