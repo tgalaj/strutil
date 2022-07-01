@@ -1,8 +1,13 @@
-dist: trusty
 language: cpp
 
-python:
-  - "2.7"
+os:
+  - linux
+
+sudo: required
+dist: trusty
+
+cache:
+  apt: true
 
 branches:
   only:
@@ -17,7 +22,6 @@ addons:
       - g++-6
 
 before_install:
-  - pip install --upgrade pip
   - pip install --user cpp-coveralls
       
 script:
