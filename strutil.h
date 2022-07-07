@@ -24,6 +24,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <map>
 
 //! The strutil namespace
 namespace strutil
