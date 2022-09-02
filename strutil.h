@@ -294,9 +294,9 @@ namespace strutil
      */
     static inline bool ends_with(const std::string & str, const std::string & suffix)
     {
-        const auto pos = str.rfind(suffix);
-
-        return (pos != std::string::npos) && (pos == (str.length() - suffix.length()));
+        const auto suffix_start = str.size() - suffix.size();
+        const auto result = str.find(suffix, suffix_start);
+        return (result == suffix_start) && (result != std::string::npos);
     }
 
     /**
@@ -318,7 +318,7 @@ namespace strutil
      */
     static inline bool starts_with(const std::string & str, const std::string & prefix)
     {
-        return str.find(prefix) == 0;
+        return str.rfind(prefix, 0) == 0;
     }
 
     /**
@@ -350,8 +350,8 @@ namespace strutil
         }
 
         // Match semantics of split(str,str)
-        if (str.size() == 0 || ends_with(str, delim)) {
-            tokens.push_back("");
+        if (str.empty() || ends_with(str, delim)) {
+            tokens.emplace_back();
         }
 
         return tokens;
