@@ -307,7 +307,7 @@ namespace strutil
      */
     static inline bool ends_with(const std::string & str, const char suffix)
     {
-        return (str.size() > 0) && (*(str.end()-1) == suffix);
+        return !str.empty() && (str.back() == suffix);
     }
 
     /**
@@ -329,7 +329,7 @@ namespace strutil
      */
     static inline bool starts_with(const std::string & str, const char prefix)
     {
-        return (str.size() > 0) && (str[0] == prefix);
+        return !str.empty() && (str.front() == prefix);
     }
 
     /**
@@ -408,7 +408,7 @@ namespace strutil
      * @param rgx_str - the set of delimiter characters.
      * @return True if the parsing is successfully done.
      */
-    static inline std::map<std::string, std::string> regex_split_map(const std::string& src, std::string rgx_str)
+    static inline std::map<std::string, std::string> regex_split_map(const std::string& src, const std::string& rgx_str)
     {
         std::map<std::string, std::string> dest;
         std::string tstr = src + " ";
@@ -484,8 +484,7 @@ namespace strutil
      */
     static inline void drop_empty(std::vector<std::string> & tokens)
     {
-        auto last = std::remove_if(tokens.begin(), tokens.end(),
-                                   [](const std::string& s){ return s.size() == 0; });
+        auto last = std::remove_if(tokens.begin(), tokens.end(), [](const std::string& s){ return s.empty(); });
         tokens.erase(last, tokens.end());
     }
 
