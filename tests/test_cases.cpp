@@ -24,9 +24,13 @@ TEST(Compare, starts_with_str)
 {
     EXPECT_EQ(true, strutil::starts_with("m_DiffuseTexture", "m_"));
     EXPECT_EQ(true, strutil::starts_with("This is a simple test case", "This "));
+    EXPECT_EQ(true, strutil::starts_with("This is a simple test case", "This is a simple test case"));
+    EXPECT_EQ(true, strutil::starts_with("", ""));
 
     EXPECT_EQ(false, strutil::starts_with("p_DiffuseTexture", "m_"));
     EXPECT_EQ(false, strutil::starts_with("This is a simple test case", "his "));
+    EXPECT_EQ(false, strutil::starts_with("abc", "abc_"));
+    EXPECT_EQ(false, strutil::starts_with("abc", "_abc"));
 
     EXPECT_EQ(false, strutil::starts_with("", "m_"));
 }
@@ -46,9 +50,13 @@ TEST(Compare, ends_with_str)
 {
     EXPECT_EQ(true, strutil::ends_with("DiffuseTexture_m", "_m"));
     EXPECT_EQ(true, strutil::ends_with("This is a simple test case", " test case"));
+    EXPECT_EQ(true, strutil::ends_with("This is a simple test case", "This is a simple test case"));
+    EXPECT_EQ(true, strutil::ends_with("", ""));
 
     EXPECT_EQ(false, strutil::ends_with("DiffuseTexture_p", "_m"));
     EXPECT_EQ(false, strutil::ends_with("This is a simple test case", "test cas"));
+    EXPECT_EQ(false, strutil::ends_with("abc", "_abc"));
+    EXPECT_EQ(false, strutil::ends_with("abc", "abc_"));
 
     EXPECT_EQ(false, strutil::ends_with("", "_m"));
 }
@@ -67,13 +75,17 @@ TEST(Compare, ends_with_char)
 TEST(Compare, contains_str)
 {
     EXPECT_EQ(true, strutil::contains("DiffuseTexture_m", "fuse"));
+    EXPECT_EQ(true, strutil::contains("", ""));
     EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", "fuser"));
+    EXPECT_EQ(false, strutil::contains("abc", "abc_"));
+    EXPECT_EQ(false, strutil::contains("", "abc"));
 }
 
 TEST(Compare, contains_char)
 {
     EXPECT_EQ(true, strutil::contains("DiffuseTexture_m", 'f'));
     EXPECT_EQ(false, strutil::contains("DiffuseTexture_m", 'z'));
+    EXPECT_EQ(false, strutil::contains("", 'z'));
 }
 
 TEST(Compare, matches)
