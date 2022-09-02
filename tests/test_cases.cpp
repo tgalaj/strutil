@@ -507,18 +507,21 @@ TEST(TextManip, to_lower)
 TEST(TextManip, to_upper)
 {
     EXPECT_EQ("HELLO STRUTIL", strutil::to_upper("HeLlo StRUTIL"));
+    EXPECT_EQ("", strutil::to_upper(""));
 }
 
 TEST(TextManip, capitalize)
 {
     EXPECT_EQ("HeLlo StRUTIL", strutil::capitalize("heLlo StRUTIL"));
     EXPECT_EQ("+ is an operator.", strutil::capitalize("+ is an operator."));
+    EXPECT_EQ("", strutil::capitalize(""));
 }
 
 TEST(TextManip, capitalize_first_char)
 {
     EXPECT_EQ("Hello strutil", strutil::capitalize_first_char("HeLlo StRUTIL"));
     EXPECT_EQ("+ is an operator.", strutil::capitalize_first_char("+ is an operator."));
+    EXPECT_EQ("", strutil::capitalize_first_char(""));
 }
 
 TEST(TextManip, trim_left_in_place)

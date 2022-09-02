@@ -101,7 +101,10 @@ namespace strutil
     static inline std::string capitalize(const std::string & str)
     {
         auto result = str;
-        result[0] = std::toupper(result[0]);
+        if (!result.empty())
+        {
+            result.front() = static_cast<char>(std::toupper(result.front()));
+        }
 
         return result;
     }
@@ -114,7 +117,10 @@ namespace strutil
     static inline std::string capitalize_first_char(const std::string & str)
     {
         auto result = to_lower(str);
-        result[0] = std::toupper(result[0]);
+        if (!result.empty())
+        {
+            result.front() = static_cast<char>(std::toupper(result.front()));
+        }
 
         return result;
     }
@@ -138,7 +144,7 @@ namespace strutil
      */
     static inline bool contains(const std::string & str, const char character)
     {
-        return contains(str, std::string(1,character));
+        return contains(str, std::string(1, character));
     }
 
     /**
@@ -224,18 +230,18 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
-     * @param replecament - substring that will replace target.
+     * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_first(std::string & str, const std::string & target, const std::string & replecament)
+    static inline bool replace_first(std::string & str, const std::string & target, const std::string & replacement)
     {
-        size_t start_pos = str.find(target);
+        const size_t start_pos = str.find(target);
         if (start_pos == std::string::npos)
         {
             return false;
         }
 
-        str.replace(start_pos, target.length(), replecament);
+        str.replace(start_pos, target.length(), replacement);
         return true;
     }
 
@@ -244,10 +250,10 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
-     * @param replecament - substring that will replace target.
+     * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_last(std::string & str, const std::string & target, const std::string & replecament)
+    static inline bool replace_last(std::string & str, const std::string & target, const std::string & replacement)
     {
         size_t start_pos = str.rfind(target);
         if (start_pos == std::string::npos)
@@ -255,7 +261,7 @@ namespace strutil
             return false;
         }
 
-        str.replace(start_pos, target.length(), replecament);
+        str.replace(start_pos, target.length(), replacement);
         return true;
     }
 
@@ -264,10 +270,10 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
-     * @param replecament - substring that will replace target.
+     * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_all(std::string & str, const std::string & target, const std::string & replecament)
+    static inline bool replace_all(std::string & str, const std::string & target, const std::string & replacement)
     {
         if (target.empty())
         {
@@ -279,8 +285,8 @@ namespace strutil
 
         while ((start_pos = str.find(target, start_pos)) != std::string::npos)
         {
-            str.replace(start_pos, target.length(), replecament);
-            start_pos += replecament.length();
+            str.replace(start_pos, target.length(), replacement);
+            start_pos += replacement.length();
         }
 
         return found_substring;
@@ -387,10 +393,10 @@ namespace strutil
      * @param rgx_str - the set of delimiter characters.
      * @return vector of resulting tokens.
      */
-    static inline std::vector<std::string> regex_split(const std::string& src, std::string rgx_str)
+    static inline std::vector<std::string> regex_split(const std::string& src, const std::string& rgx_str)
     {
         std::vector<std::string> elems;
-        std::regex rgx(rgx_str);
+        const std::regex rgx(rgx_str);
         std::sregex_token_iterator iter(src.begin(), src.end(), rgx, -1);
         std::sregex_token_iterator end;
         while (iter != end)
