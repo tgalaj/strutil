@@ -1,17 +1,14 @@
  /**
  ******************************************************************************
  *
- *  @mainpage strutil v1.0.1 - header-only string utility library documentation
+ *  @mainpage strutil v1.0.2 - header-only string utility library documentation
  *  @see https://github.com/Shot511/strutil
  *
- *  @copyright  Copyright (C) 2020 Tomasz Galaj (Shot511)
+ *  @copyright  Copyright (C) 2022 Tomasz Galaj (Shot511)
  *  @file       strutil.h
  *  @brief      Library public interface header
  *
- *  @subsection Thank you for your contributions:
- *              - SomeRandomDev49
- *              - flying-tiger
- * 
+ *  @subsection Thank you all for your contributions!! 
  *
  ******************************************************************************
  */
