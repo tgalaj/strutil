@@ -38,9 +38,14 @@ jobs:
       run: |
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
         /home/runner/work/strutil/strutil/build/./strutil-tests
+    - name: Install lcov and Generate lcov.info
+      run: |
+        sudo apt-get install lcov
+        lcov --c --directory . --output-file lcov.info
       
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        base-path: .
+        base-path: /home/runner/work/strutil/strutil/build/
+        path-to-lcov: lcov.info
