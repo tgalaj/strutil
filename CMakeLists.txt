@@ -47,5 +47,3 @@ if (COVERAGE)
 else()
 	target_link_libraries(${PROJECT_NAME} gtest_main)
 endif()
-
-# add_test(NAME example_test COMMAND ${PROJECT_NAME})

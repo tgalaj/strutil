@@ -9,11 +9,14 @@ Any constructive comments and improvements to this little library are very welco
 
 ## Features
 - [x] Generic parsing methods - from std::string and to std::string.
-- [x] Splitting std::string to tokens with user defined delimiter (useful for CSV parsing).
+- [x] Splitting std::string to tokens with user defined delimiter (useful for CSV parsing) or regex expression.
+- [x] Joining split string that is stored in *std::vector<std::string>* with the specified delimiter.
 - [x] Replace a substring with another substring.
-- [x] Text manipulation functions: *repeat* (char or std::string), *to_lower*, *to_upper*, *trim* (also in-place).
+- [x] Text manipulation functions: *capitalize*, *repeat* (char or std::string), *to_lower*, *to_upper*, *trim*, *trim_left*, *trim_right* (also in-place).
 - [x] Checks: *contains*, *starts_with*, *ends_with*, *matches*.
 - [x] Compare two std::string with their case ignored. 
+- [x] Removing all empty strings in *std::vector<std::string>* (also in-place).
+- [x] Sorting in ascending/descending order elements in *std::vector<std::string>*.
 - [x] Header only library - no building required.
 - [x] Does not require any dependencies.
 
@@ -28,20 +31,18 @@ Simply put *strutil.h* in your *include* directory. Then, in C++ file include it
 ```
 
 ## Example usage
-See **tests/test_cases.cpp** file for example usage.
+See **tests/test_cases.cpp** file for the example usage.
 
 ## Testing
-strutil supports Google Test library ([link](https://github.com/google/googletest)). 
+strutil supports the Google Test library ([link](https://github.com/google/googletest)). 
 
-To build testing environment execute the following CMake commands:
+To build the testing environment execute the following command in the root directory:
 
 ```
-mkdir build
-cd build
-cmake ..
+cmake -B build
 ```
 
-## Thanks for the contributions
-* SomeRandomDev49
-* flying-tiger
-* zhongjingjogy
+## Contributions
+All contributions are more than welcome. 
+
+Thank you all for your contributions!
