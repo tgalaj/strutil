@@ -51,11 +51,14 @@
 <h2>Features</h2>
 <ul>
 <li>[x] Generic parsing methods - from std::string and to std::string.</li>
-<li>[x] Splitting std::string to tokens with user defined delimiter (useful for CSV parsing).</li>
+<li>[x] Splitting std::string to tokens with user defined delimiter (useful for CSV parsing) or regex expression.</li>
+<li>[x] Joining split string that is stored in <em>std::vector&lt;std::string&gt;</em> with the specified delimiter.</li>
 <li>[x] Replace a substring with another substring.</li>
-<li>[x] Text manipulation functions: <em>repeat</em> (char or std::string), <em>to_lower</em>, <em>to_upper</em>, <em>trim</em> (also in-place).</li>
+<li>[x] Text manipulation functions: <em>capitalize</em>, <em>repeat</em> (char or std::string), <em>to_lower</em>, <em>to_upper</em>, <em>trim</em>, <em>trim_left</em>, <em>trim_right</em> (also in-place).</li>
 <li>[x] Checks: <em>contains</em>, <em>starts_with</em>, <em>ends_with</em>, <em>matches</em>.</li>
 <li>[x] Compare two std::string with their case ignored.</li>
+<li>[x] Removing all empty strings in <em>std::vector&lt;std::string&gt;</em> (also in-place).</li>
+<li>[x] Sorting in ascending/descending order elements in <em>std::vector&lt;std::string&gt;</em>.</li>
 <li>[x] Header only library - no building required.</li>
 <li>[x] Does not require any dependencies.</li>
 </ul>
@@ -65,19 +68,14 @@
 <p>Simply put <em><a class="el" href="strutil_8h.html" title="Library public interface header.">strutil.h</a></em> in your <em>include</em> directory. Then, in C++ file include it:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="strutil_8h.html">strutil.h</a>&gt;</span></div>
 </div><!-- fragment --><h2>Example usage</h2>
-<p>See <b>tests/test_cases.cpp</b> file for example usage.</p>
+<p>See <b>tests/test_cases.cpp</b> file for the example usage.</p>
 <h2>Testing</h2>
-<p>strutil supports Google Test library (<a href="https://github.com/google/googletest">link</a>).</p>
-<p>To build testing environment execute the following CMake commands:</p>
-<div class="fragment"><div class="line">mkdir build</div>
-<div class="line">cd build</div>
-<div class="line">cmake ..</div>
-</div><!-- fragment --><h2>Thanks for the contributions</h2>
-<ul>
-<li>SomeRandomDev49</li>
-<li>flying-tiger</li>
-<li>zhongjingjogy </li>
-</ul>
+<p>strutil supports the Google Test library (<a href="https://github.com/google/googletest">link</a>).</p>
+<p>To build the testing environment execute the following command in the root directory:</p>
+<div class="fragment"><div class="line">cmake -B build</div>
+</div><!-- fragment --><h2>Contributions</h2>
+<p>All contributions are more than welcome.</p>
+<p>Thank you all for your contributions! </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <div class="ttc" id="astrutil_8h_html"><div class="ttname"><a href="strutil_8h.html">strutil.h</a></div><div class="ttdoc">Library public interface header.</div></div>
