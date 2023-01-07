@@ -223,7 +223,7 @@ namespace strutil
     }
 
     /**
-     * @brief Replaces (in-place) the first occurance of target with replacement.
+     * @brief Replaces (in-place) the first occurrence of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
@@ -243,7 +243,7 @@ namespace strutil
     }
 
     /**
-     * @brief Replaces (in-place) last occurance of target with replacement.
+     * @brief Replaces (in-place) last occurrence of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
@@ -263,7 +263,7 @@ namespace strutil
     }
 
     /**
-     * @brief Replaces (in-place) all occurances of target with replacement.
+     * @brief Replaces (in-place) all occurrences of target with replacement.
      *        Taken from: http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string.
      * @param str - input std::string that will be modified.
      * @param target - substring that will be replaced with replacement.
