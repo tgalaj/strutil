@@ -1,5 +1,5 @@
-[![Build Status](https://github.com/Shot511/strutil/actions/workflows/cpp_cmake.yml/badge.svg)](https://github.com/Shot511/strutil/actions)
-[![Coverage Status](https://coveralls.io/repos/github/Shot511/strutil/badge.svg?branch=master)](https://coveralls.io/github/Shot511/strutil?branch=master)
+[![Build Status](https://github.com/tgalaj/strutil/actions/workflows/cpp_cmake.yml/badge.svg)](https://github.com/tgalaj/strutil/actions)
+[![Coverage Status](https://coveralls.io/repos/github/tgalaj/strutil/badge.svg?branch=master)](https://coveralls.io/github/tgalaj/strutil?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## strutil
@@ -21,7 +21,7 @@ Any constructive comments and improvements to this little library are very welco
 - [x] Does not require any dependencies.
 
 ## Documentation
-Online documentation can be found [here](https://shot511.github.io/strutil/).
+Online documentation can be found [here](https://tgalaj.github.io/strutil/).
 
 ## Adding strutil to existing project
 Simply put *strutil.h* in your *include* directory. Then, in C++ file include it:
