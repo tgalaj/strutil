@@ -111,7 +111,7 @@ html_theme_options = {
 
 html_context = {
   'display_github': True,
-  'github_user': 'Shot511',
+  'github_user': 'tgalaj',
   'github_repo': 'strutil',
   'github_version': 'master/docs/',
 }
