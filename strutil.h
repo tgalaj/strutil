@@ -4,7 +4,7 @@
  *  @mainpage strutil v1.0.2 - header-only string utility library documentation
  *  @see https://github.com/Shot511/strutil
  *
- *  @copyright  Copyright (C) 2022 Tomasz Galaj (Shot511)
+ *  @copyright  Copyright (C) 2024 Tomasz Galaj
  *  @file       strutil.h
  *  @brief      Library public interface header
  *
@@ -17,11 +17,11 @@
 
 #include <algorithm>
 #include <cctype>
+#include <map>
 #include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <map>
 
 //! The strutil namespace
 namespace strutil
