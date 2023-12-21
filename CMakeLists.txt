@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.20)
 project(strutil-tests)
 
 include_directories(${PROJECT_SOURCE_DIR})
@@ -40,6 +40,7 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(${PROJECT_NAME} tests/strutil_tests.cpp tests/test_cases.cpp strutil.h)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
 if (COVERAGE)
     target_compile_options(${PROJECT_NAME} PRIVATE --coverage)

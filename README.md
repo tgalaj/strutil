@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## strutil
-Easy to use, header only C++ 11 std::string utility library. 
+Easy to use, header only C++ 17 std::string utility library. 
 
 Any constructive comments and improvements to this little library are very welcome.
 

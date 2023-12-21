@@ -6,7 +6,7 @@
 strutil
 =======
 
-Easy to use, header only C++ 11 std::string utility library.
+Easy to use, header only C++ 17 std::string utility library.
 
 Any constructive comments and improvements to this little library are more than welcome.
 

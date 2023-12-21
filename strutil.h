@@ -17,6 +17,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <execution>
 #include <map>
 #include <regex>
 #include <sstream>
@@ -510,7 +511,7 @@ namespace strutil
      */
     static inline void drop_duplicate(std::vector<std::string> &tokens)
     {
-        std::sort(tokens.begin(), tokens.end());
+        std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
         tokens.erase(end_unique, tokens.end());
     }
@@ -523,7 +524,7 @@ namespace strutil
      */
     static inline std::vector<std::string> drop_duplicate_copy(std::vector<std::string> tokens)
     {
-        std::sort(tokens.begin(), tokens.end());
+        std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
         tokens.erase(end_unique, tokens.end());
         return tokens;
@@ -576,7 +577,7 @@ namespace strutil
     template<typename T>
     static inline void sorting_ascending(std::vector<T> &strs)
     {
-        std::sort(strs.begin(), strs.end());
+        std::sort(std::execution::par_unseq, strs.begin(), strs.end());
     }
 
     /**
@@ -586,7 +587,7 @@ namespace strutil
     template<typename T>
     static inline void sorting_descending(std::vector<T> &strs)
     {
-        std::sort(strs.begin(),strs.end(), std::greater<T>());
+        std::sort(std::execution::par_unseq, strs.begin(),strs.end(), std::greater<T>());
     }
 
     /**
