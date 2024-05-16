@@ -458,15 +458,15 @@ namespace strutil
     }
 
     /**
-     * @brief Joins all elements of std::vector tokens of arbitrary datatypes
+     * @brief Joins all elements of a container of arbitrary datatypes
      *        into one std::string with delimiter delim.
-     * @tparam T - arbitrary datatype.
-     * @param tokens - vector of tokens.
+     * @tparam Container - container type.
+     * @param tokens - container of tokens.
      * @param delim - the delimiter.
-     * @return std::string with joined elements of vector tokens with delimiter delim.
+     * @return std::string with joined elements of container tokens with delimiter delim.
      */
-    template<typename T>
-    static inline std::string join(const std::vector<T> & tokens, const std::string & delim)
+    template<typename Container>
+    static inline std::string join(const Container & tokens, const std::string & delim)
     {
         std::ostringstream result;
         for(auto it = tokens.begin(); it != tokens.end(); ++it)
@@ -483,21 +483,25 @@ namespace strutil
     }
 
     /**
-     * @brief Inplace removal of all empty strings in a vector<string>
-     * @param tokens - vector of strings.
+     * @brief Inplace removal of all empty strings in a container of strings
+     * @tparam Container - container type.
+     * @param tokens - container of strings.
      */
-    static inline void drop_empty(std::vector<std::string> & tokens)
+    template<template<class> class Container>
+    static inline void drop_empty(Container<std::string> & tokens)
     {
         auto last = std::remove_if(tokens.begin(), tokens.end(), [](const std::string& s){ return s.empty(); });
         tokens.erase(last, tokens.end());
     }
 
     /**
-     * @brief Inplace removal of all empty strings in a vector<string>
-     * @param tokens - vector of strings.
-     * @return vector of non-empty tokens.
+     * @brief Inplace removal of all empty strings in a container of strings
+     * @tparam container - container type.
+     * @param tokens - container of strings.
+     * @return container of non-empty tokens.
      */
-    static inline std::vector<std::string> drop_empty_copy(std::vector<std::string> tokens)
+    template<template<class> class Container>
+    static inline Container<std::string> drop_empty_copy(Container<std::string> tokens)
     {
         drop_empty(tokens);
         return tokens;
@@ -506,10 +510,12 @@ namespace strutil
     /**
      * @brief Inplace removal of all duplicate strings in a vector<string> where order is not to be maintained
      *        Taken from: C++ Primer V5
+     * @tparam T - arbitrary datatype.
      * @param tokens - vector of strings.
      * @return vector of non-duplicate tokens.
      */
-    static inline void drop_duplicate(std::vector<std::string> &tokens)
+    template<typename T>
+    static inline void drop_duplicate(std::vector<T> &tokens)
     {
         std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
@@ -519,10 +525,12 @@ namespace strutil
     /**
      * @brief Removal of all duplicate strings in a vector<string> where order is not to be maintained
      *        Taken from: C++ Primer V5
+     * @tparam T - arbitrary datatype.
      * @param tokens - vector of strings.
      * @return vector of non-duplicate tokens.
      */
-    static inline std::vector<std::string> drop_duplicate_copy(std::vector<std::string> tokens)
+    template<typename T>
+    static inline std::vector<T> drop_duplicate_copy(std::vector<T> tokens)
     {
         std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
@@ -591,21 +599,21 @@ namespace strutil
     }
 
     /**
-     * @brief Reverse input std::vector<std::string> strs.
-     * @param strs - std::vector<std::string> to be checked.
+     * @brief Reverse input container strs.
+     * @param strs - container to be checked.
      */
-    template<typename T>
-    static inline void reverse_inplace(std::vector<T> &strs)
+    template<typename Container>
+    static inline void reverse_inplace(Container &strs)
     {
         std::reverse(strs.begin(), strs.end());
     }
 
     /**
-     * @brief Reverse input std::vector<std::string> strs.
-     * @param strs - std::vector<std::string> to be checked.
+     * @brief Reverse input container strs.
+     * @param strs - container to be checked.
      */
-    template<typename T>
-    static inline std::vector<T> reverse_copy(std::vector<T> strs)
+    template<typename Container>
+    static inline Container reverse_copy(Container strs)
     {
         std::reverse(strs.begin(), strs.end());
         return strs;
