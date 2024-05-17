@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; strutil  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="strutil" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            strutil
+          </a>
+              <div class="version">
+                2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">strutil</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#_CPPv47strutil"><code class="docutils literal notranslate"><span class="pre">strutil</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil10capitalizeERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::capitalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil21capitalize_first_charERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::capitalize_first_char()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil19compare_ignore_caseERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::compare_ignore_case()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil8containsERKNSt6stringEKc"><code class="docutils literal notranslate"><span class="pre">strutil::contains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil8containsERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::contains()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil14drop_duplicateERNSt6vectorINSt6stringEEE"><code class="docutils literal notranslate"><span class="pre">strutil::drop_duplicate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil19drop_duplicate_copyENSt6vectorINSt6stringEEE"><code class="docutils literal notranslate"><span class="pre">strutil::drop_duplicate_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil10drop_emptyERNSt6vectorINSt6stringEEE"><code class="docutils literal notranslate"><span class="pre">strutil::drop_empty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil15drop_empty_copyENSt6vectorINSt6stringEEE"><code class="docutils literal notranslate"><span class="pre">strutil::drop_empty_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil9ends_withERKNSt6stringEKc"><code class="docutils literal notranslate"><span class="pre">strutil::ends_with()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil9ends_withERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::ends_with()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil4joinENSt6stringERKNSt6vectorI1TEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::join()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil7matchesERKNSt6stringERKNSt5regexE"><code class="docutils literal notranslate"><span class="pre">strutil::matches()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil12parse_stringE1TRKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::parse_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil11regex_splitERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::regex_split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil15regex_split_mapERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::regex_split_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil6repeatEcj"><code class="docutils literal notranslate"><span class="pre">strutil::repeat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil6repeatERKNSt6stringEj"><code class="docutils literal notranslate"><span class="pre">strutil::repeat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil11replace_allERNSt6stringERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::replace_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil13replace_firstERNSt6stringERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::replace_first()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil12replace_lastERNSt6stringERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::replace_last()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil12reverse_copyENSt6vectorI1TEENSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">strutil::reverse_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil15reverse_inplaceEvRNSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">strutil::reverse_inplace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil17sorting_ascendingEvRNSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">strutil::sorting_ascending()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil18sorting_descendingEvRNSt6vectorI1TEE"><code class="docutils literal notranslate"><span class="pre">strutil::sorting_descending()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil5splitERKNSt6stringEKc"><code class="docutils literal notranslate"><span class="pre">strutil::split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil5splitERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil9split_anyERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::split_any()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil11starts_withERKNSt6stringEKc"><code class="docutils literal notranslate"><span class="pre">strutil::starts_with()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil11starts_withERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::starts_with()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil8to_lowerERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::to_lower()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN7strutil9to_stringENSt6stringE1T"><code class="docutils literal notranslate"><span class="pre">strutil::to_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil8to_upperERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::to_upper()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil4trimERNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil9trim_copyENSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil9trim_leftERNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim_left()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil14trim_left_copyENSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim_left_copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil10trim_rightERNSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim_right()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N7strutil15trim_right_copyENSt6stringE"><code class="docutils literal notranslate"><span class="pre">strutil::trim_right_copy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">strutil</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/tgalaj/strutil/blob/master/docs/strutil.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<span id="id1"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>Library public interface header. </p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv47strutil">
+<span id="_CPPv37strutil"></span><span id="_CPPv27strutil"></span><span id="strutil"></span><span class="target" id="namespacestrutil"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">strutil</span></span></span><a class="headerlink" href="#_CPPv47strutil" title="Link to this definition"></a><br /></dt>
+<dd><p>The strutil namespace. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil10capitalizeERKNSt6stringE">
+<span id="_CPPv3N7strutil10capitalizeERKNSt6stringE"></span><span id="_CPPv2N7strutil10capitalizeERKNSt6stringE"></span><span id="strutil::capitalize__ssCR"></span><span class="target" id="namespacestrutil_1afa66ee9430a5d47f45f3466dfd03ece3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">capitalize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil10capitalizeERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts the first character of a string to uppercase letter and lowercases all other characters, if any. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input string to be capitalized. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string with the first letter capitalized and all other characters lowercased. It doesn’t modify the input string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil21capitalize_first_charERKNSt6stringE">
+<span id="_CPPv3N7strutil21capitalize_first_charERKNSt6stringE"></span><span id="_CPPv2N7strutil21capitalize_first_charERKNSt6stringE"></span><span id="strutil::capitalize_first_char__ssCR"></span><span class="target" id="namespacestrutil_1aeb90b538543a3d98eec7a5de1f32d288"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">capitalize_first_char</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil21capitalize_first_charERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts only the first character of a string to uppercase letter, all other characters stay unchanged. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input string to be modified. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string with the first letter capitalized. All other characters stay unchanged. It doesn’t modify the input string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil19compare_ignore_caseERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil19compare_ignore_caseERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil19compare_ignore_caseERKNSt6stringERKNSt6stringE"></span><span id="strutil::compare_ignore_case__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a3c7ac5a89f054a1bcee371e64c6cf953"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compare_ignore_case</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str1</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil19compare_ignore_caseERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Compares two std::strings ignoring their case (lower/upper). </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str1</strong> – - std::string to compare </p></li>
+<li><p><strong>str2</strong> – - std::string to compare </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if str1 and str2 are equal, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil8containsERKNSt6stringEKc">
+<span id="_CPPv3N7strutil8containsERKNSt6stringEKc"></span><span id="_CPPv2N7strutil8containsERKNSt6stringEKc"></span><span id="strutil::contains__ssCR.cC"></span><span class="target" id="namespacestrutil_1a7cdb5027234698994b95fcdbb2fa5fe1"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">contains</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">character</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil8containsERKNSt6stringEKc" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if input std::string str contains specified character. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string to be checked. </p></li>
+<li><p><strong>character</strong> – - searched character. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if character was found in str, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil8containsERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil8containsERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil8containsERKNSt6stringERKNSt6stringE"></span><span id="strutil::contains__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1afd6f761bacbf437c0534149d607e7776"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">contains</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">substring</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil8containsERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if input std::string str contains specified substring. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string to be checked. </p></li>
+<li><p><strong>substring</strong> – - searched substring. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if substring was found in str, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil14drop_duplicateERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N7strutil14drop_duplicateERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N7strutil14drop_duplicateERNSt6vectorINSt6stringEEE"></span><span id="strutil::drop_duplicate__std::vector:ss:R"></span><span class="target" id="namespacestrutil_1a6654599a0af1a9fa28339d180941f80c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">drop_duplicate</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tokens</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil14drop_duplicateERNSt6vectorINSt6stringEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Inplace removal of all duplicate strings in a vector&lt;string&gt; where order is not to be maintained Taken from: C++ Primer V5. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – - vector of strings. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>vector of non-duplicate tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil19drop_duplicate_copyENSt6vectorINSt6stringEEE">
+<span id="_CPPv3N7strutil19drop_duplicate_copyENSt6vectorINSt6stringEEE"></span><span id="_CPPv2N7strutil19drop_duplicate_copyENSt6vectorINSt6stringEEE"></span><span id="strutil::drop_duplicate_copy__std::vector:ss:"></span><span class="target" id="namespacestrutil_1a94e12de8de7a09b2e028e33a00f5f698"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">drop_duplicate_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">tokens</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil19drop_duplicate_copyENSt6vectorINSt6stringEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Removal of all duplicate strings in a vector&lt;string&gt; where order is not to be maintained Taken from: C++ Primer V5. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – - vector of strings. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>vector of non-duplicate tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil10drop_emptyERNSt6vectorINSt6stringEEE">
+<span id="_CPPv3N7strutil10drop_emptyERNSt6vectorINSt6stringEEE"></span><span id="_CPPv2N7strutil10drop_emptyERNSt6vectorINSt6stringEEE"></span><span id="strutil::drop_empty__std::vector:ss:R"></span><span class="target" id="namespacestrutil_1a7f01a818547c29a8f8ebbf6b3507b461"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">drop_empty</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tokens</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil10drop_emptyERNSt6vectorINSt6stringEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Inplace removal of all empty strings in a vector&lt;string&gt; </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – - vector of strings. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil15drop_empty_copyENSt6vectorINSt6stringEEE">
+<span id="_CPPv3N7strutil15drop_empty_copyENSt6vectorINSt6stringEEE"></span><span id="_CPPv2N7strutil15drop_empty_copyENSt6vectorINSt6stringEEE"></span><span id="strutil::drop_empty_copy__std::vector:ss:"></span><span class="target" id="namespacestrutil_1a35b49cf9f5b7b011226d8e098adeb8ab"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">drop_empty_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">tokens</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil15drop_empty_copyENSt6vectorINSt6stringEEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Inplace removal of all empty strings in a vector&lt;string&gt; </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> – - vector of strings. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>vector of non-empty tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil9ends_withERKNSt6stringEKc">
+<span id="_CPPv3N7strutil9ends_withERKNSt6stringEKc"></span><span id="_CPPv2N7strutil9ends_withERKNSt6stringEKc"></span><span id="strutil::ends_with__ssCR.cC"></span><span class="target" id="namespacestrutil_1a8795895d819237afb982942cf2f299e1"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ends_with</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">suffix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil9ends_withERKNSt6stringEKc" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if std::string str ends with specified character. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be checked. </p></li>
+<li><p><strong>suffix</strong> – - searched character in str. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if ends with character, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil9ends_withERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil9ends_withERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil9ends_withERKNSt6stringERKNSt6stringE"></span><span id="strutil::ends_with__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a70b6dcf2f53bfce25c924ca73da1e6b4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ends_with</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">suffix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil9ends_withERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if std::string str ends with specified suffix. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be checked. </p></li>
+<li><p><strong>suffix</strong> – - searched suffix in str. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if suffix was found, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil4joinENSt6stringERKNSt6vectorI1TEERKNSt6stringE">
+<span id="_CPPv3I0EN7strutil4joinERKNSt6vectorI1TEERKNSt6stringE"></span><span id="_CPPv2I0EN7strutil4joinERKNSt6vectorI1TEERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1a0648674a2c8de890f03a16fafe43d010"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">join</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil4joinENSt6stringERKNSt6vectorI1TEERKNSt6stringE" title="strutil::join::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tokens</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">delim</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil4joinENSt6stringERKNSt6vectorI1TEERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Joins all elements of std::vector tokens of arbitrary datatypes into one std::string with delimiter delim. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – - arbitrary datatype. </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>tokens</strong> – - vector of tokens. </p></li>
+<li><p><strong>delim</strong> – - the delimiter. </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>std::string with joined elements of vector tokens with delimiter delim. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil7matchesERKNSt6stringERKNSt5regexE">
+<span id="_CPPv3N7strutil7matchesERKNSt6stringERKNSt5regexE"></span><span id="_CPPv2N7strutil7matchesERKNSt6stringERKNSt5regexE"></span><span id="strutil::matches__ssCR.std::regexCR"></span><span class="target" id="namespacestrutil_1a8abfba142b0e465d6c6e2981797f9963"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">matches</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">regex</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">regex</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil7matchesERKNSt6stringERKNSt5regexE" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if input std::string str matches specified reular expression regex. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string to be checked. </p></li>
+<li><p><strong>regex</strong> – - the std::regex regular expression. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if regex matches str, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil12parse_stringE1TRKNSt6stringE">
+<span id="_CPPv3I0EN7strutil12parse_stringERKNSt6stringE"></span><span id="_CPPv2I0EN7strutil12parse_stringERKNSt6stringE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1abe0992e7d5b58115e993ad52fc975d24"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN7strutil12parse_stringE1TRKNSt6stringE" title="strutil::parse_string::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parse_string</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil12parse_stringE1TRKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts std::string into any datatype. Datatype must support &lt;&lt; operator. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>str</strong> – - std::string that will be converted into datatype T. </p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Variable of datatype T. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil11regex_splitERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil11regex_splitERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil11regex_splitERKNSt6stringERKNSt6stringE"></span><span id="strutil::regex_split__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a307dfd0713e57e20ebf78c2d84c3318a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">regex_split</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">src</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rgx_str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil11regex_splitERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Splits input string using regex as a delimiter. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – - std::string that will be split. </p></li>
+<li><p><strong>rgx_str</strong> – - the set of delimiter characters. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>vector of resulting tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil15regex_split_mapERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil15regex_split_mapERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil15regex_split_mapERKNSt6stringERKNSt6stringE"></span><span id="strutil::regex_split_map__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1ae2e7549bd35da7ab77951eaa5dbf6cc4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">regex_split_map</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">src</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rgx_str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil15regex_split_mapERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Splits input string using regex as a delimiter. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – - std::string that will be split. </p></li>
+<li><p><strong>dest</strong> – - map of matched delimiter and those being splitted. </p></li>
+<li><p><strong>rgx_str</strong> – - the set of delimiter characters. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the parsing is successfully done. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil6repeatEcj">
+<span id="_CPPv3N7strutil6repeatEcj"></span><span id="_CPPv2N7strutil6repeatEcj"></span><span id="strutil::repeat__c.unsigned"></span><span class="target" id="namespacestrutil_1ae39201c266c1d61d772b5026e723af7b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">repeat</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">c</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil6repeatEcj" title="Link to this definition"></a><br /></dt>
+<dd><p>Creates new std::string with repeated n times char c. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> – - char that needs to be repeated. </p></li>
+<li><p><strong>n</strong> – - number of iterations. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>std::string with repeated char c. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil6repeatERKNSt6stringEj">
+<span id="_CPPv3N7strutil6repeatERKNSt6stringEj"></span><span id="_CPPv2N7strutil6repeatERKNSt6stringEj"></span><span id="strutil::repeat__ssCR.unsigned"></span><span class="target" id="namespacestrutil_1a04c5451f539eb62260dfda54d3aab4d3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">repeat</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil6repeatERKNSt6stringEj" title="Link to this definition"></a><br /></dt>
+<dd><p>Creates new std::string with repeated n times substring str. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - substring that needs to be repeated. </p></li>
+<li><p><strong>n</strong> – - number of iterations. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>std::string with repeated substring str. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil11replace_allERNSt6stringERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil11replace_allERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil11replace_allERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="strutil::replace_all__ssR.ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a78c4e052b45ff5f4d007cfaa36916026"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">replace_all</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">target</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">replacement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil11replace_allERNSt6stringERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Replaces (in-place) all occurrences of target with replacement. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string">http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be modified. </p></li>
+<li><p><strong>target</strong> – - substring that will be replaced with replacement. </p></li>
+<li><p><strong>replacement</strong> – - substring that will replace target. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if replacement was successfull, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil13replace_firstERNSt6stringERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil13replace_firstERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil13replace_firstERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="strutil::replace_first__ssR.ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a32d0f61b379038b4e149b267e45a63b3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">replace_first</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">target</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">replacement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil13replace_firstERNSt6stringERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Replaces (in-place) the first occurrence of target with replacement. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string">http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be modified. </p></li>
+<li><p><strong>target</strong> – - substring that will be replaced with replacement. </p></li>
+<li><p><strong>replacement</strong> – - substring that will replace target. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if replacement was successfull, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil12replace_lastERNSt6stringERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil12replace_lastERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil12replace_lastERNSt6stringERKNSt6stringERKNSt6stringE"></span><span id="strutil::replace_last__ssR.ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a2354e970f74c4e3c485dd076aa313e23"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">replace_last</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">target</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">replacement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil12replace_lastERNSt6stringERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Replaces (in-place) last occurrence of target with replacement. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string">http://stackoverflow.com/questions/3418231/c-replace-part-of-a-string-with-another-string</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be modified. </p></li>
+<li><p><strong>target</strong> – - substring that will be replaced with replacement. </p></li>
+<li><p><strong>replacement</strong> – - substring that will replace target. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if replacement was successfull, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil12reverse_copyENSt6vectorI1TEENSt6vectorI1TEE">
+<span id="_CPPv3I0EN7strutil12reverse_copyENSt6vectorI1TEE"></span><span id="_CPPv2I0EN7strutil12reverse_copyENSt6vectorI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1abbec0e63fbaded18a1c3d30df120f5c8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil12reverse_copyENSt6vectorI1TEENSt6vectorI1TEE" title="strutil::reverse_copy::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reverse_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil12reverse_copyENSt6vectorI1TEENSt6vectorI1TEE" title="strutil::reverse_copy::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">strs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil12reverse_copyENSt6vectorI1TEENSt6vectorI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Reverse input std::vector&lt;std::string&gt; strs. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>strs</strong> – - std::vector&lt;std::string&gt; to be checked. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil15reverse_inplaceEvRNSt6vectorI1TEE">
+<span id="_CPPv3I0EN7strutil15reverse_inplaceERNSt6vectorI1TEE"></span><span id="_CPPv2I0EN7strutil15reverse_inplaceERNSt6vectorI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1ab680a2d7aa83f7b8743ed3d2492b16bb"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reverse_inplace</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil15reverse_inplaceEvRNSt6vectorI1TEE" title="strutil::reverse_inplace::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">strs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil15reverse_inplaceEvRNSt6vectorI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Reverse input std::vector&lt;std::string&gt; strs. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>strs</strong> – - std::vector&lt;std::string&gt; to be checked. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil17sorting_ascendingEvRNSt6vectorI1TEE">
+<span id="_CPPv3I0EN7strutil17sorting_ascendingERNSt6vectorI1TEE"></span><span id="_CPPv2I0EN7strutil17sorting_ascendingERNSt6vectorI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1afc8cde77476742086e1577141ae93053"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sorting_ascending</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil17sorting_ascendingEvRNSt6vectorI1TEE" title="strutil::sorting_ascending::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">strs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil17sorting_ascendingEvRNSt6vectorI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Sort input std::vector&lt;std::string&gt; strs in ascending order. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>strs</strong> – - std::vector&lt;std::string&gt; to be checked. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil18sorting_descendingEvRNSt6vectorI1TEE">
+<span id="_CPPv3I0EN7strutil18sorting_descendingERNSt6vectorI1TEE"></span><span id="_CPPv2I0EN7strutil18sorting_descendingERNSt6vectorI1TEE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1a64ccd1da558200d2663be9052ec31968"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sorting_descending</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0EN7strutil18sorting_descendingEvRNSt6vectorI1TEE" title="strutil::sorting_descending::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">strs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil18sorting_descendingEvRNSt6vectorI1TEE" title="Link to this definition"></a><br /></dt>
+<dd><p>Sorted input std::vector&lt;std::string&gt; strs in descending order. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>strs</strong> – - std::vector&lt;std::string&gt; to be checked. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil5splitERKNSt6stringEKc">
+<span id="_CPPv3N7strutil5splitERKNSt6stringEKc"></span><span id="_CPPv2N7strutil5splitERKNSt6stringEKc"></span><span id="strutil::split__ssCR.cC"></span><span class="target" id="namespacestrutil_1ad4c189cab8456d0e369b21bb9c555a78"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">split</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">delim</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil5splitERKNSt6stringEKc" title="Link to this definition"></a><br /></dt>
+<dd><p>Splits input std::string str according to input delim. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string that will be splitted. </p></li>
+<li><p><strong>delim</strong> – - the delimiter. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>std::vector&lt;std::string&gt; that contains all splitted tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil5splitERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil5splitERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil5splitERKNSt6stringERKNSt6stringE"></span><span id="strutil::split__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a39febff1a003ebd7f53153fb2a41e50f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">split</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">delim</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil5splitERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Splits input std::string str according to input std::string delim. Taken from: <a class="reference external" href="https://stackoverflow.com/a/46931770/1892346">https://stackoverflow.com/a/46931770/1892346</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string that will be split. </p></li>
+<li><p><strong>delim</strong> – - the delimiter. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>std::vector&lt;std::string&gt; that contains all splitted tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil9split_anyERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil9split_anyERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil9split_anyERKNSt6stringERKNSt6stringE"></span><span id="strutil::split_any__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a66fdf6c002d691c0f84537e38d8678aa"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">split_any</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">delims</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil9split_anyERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Splits input string using any delimiter in the given set. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - std::string that will be split. </p></li>
+<li><p><strong>delims</strong> – - the set of delimiter characters. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>vector of resulting tokens. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil11starts_withERKNSt6stringEKc">
+<span id="_CPPv3N7strutil11starts_withERKNSt6stringEKc"></span><span id="_CPPv2N7strutil11starts_withERKNSt6stringEKc"></span><span id="strutil::starts_with__ssCR.cC"></span><span class="target" id="namespacestrutil_1afb259137f8febe8aa846b4946ffe08b7"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">starts_with</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">prefix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil11starts_withERKNSt6stringEKc" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if std::string str starts with specified character. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be checked. </p></li>
+<li><p><strong>prefix</strong> – - searched character in str. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if starts with character, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil11starts_withERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N7strutil11starts_withERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N7strutil11starts_withERKNSt6stringERKNSt6stringE"></span><span id="strutil::starts_with__ssCR.ssCR"></span><span class="target" id="namespacestrutil_1a11f91b3041ce16b8420dedd881eade02"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">starts_with</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">prefix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil11starts_withERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Checks if std::string str starts with specified prefix. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> – - input std::string that will be checked. </p></li>
+<li><p><strong>prefix</strong> – - searched prefix in str. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if prefix was found, false otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil8to_lowerERKNSt6stringE">
+<span id="_CPPv3N7strutil8to_lowerERKNSt6stringE"></span><span id="_CPPv2N7strutil8to_lowerERKNSt6stringE"></span><span id="strutil::to_lower__ssCR"></span><span class="target" id="namespacestrutil_1a4ba3a5b76e6bbdada7bc28bd83a955c7"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_lower</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil8to_lowerERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts std::string to lower case. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - std::string that needs to be converted. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lower case input std::string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN7strutil9to_stringENSt6stringE1T">
+<span id="_CPPv3I0EN7strutil9to_stringE1T"></span><span id="_CPPv2I0EN7strutil9to_stringE1T"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacestrutil_1a8f8315af1a49ef03bf586abf2a82c112"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_string</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN7strutil9to_stringENSt6stringE1T" title="strutil::to_string::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN7strutil9to_stringENSt6stringE1T" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts any datatype into std::string. Datatype must support &lt;&lt; operator. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>T</strong> – </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>value</strong> – - will be converted into std::string. </p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Converted value as std::string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil8to_upperERKNSt6stringE">
+<span id="_CPPv3N7strutil8to_upperERKNSt6stringE"></span><span id="_CPPv2N7strutil8to_upperERKNSt6stringE"></span><span id="strutil::to_upper__ssCR"></span><span class="target" id="namespacestrutil_1a99c26b04a6071305f73a7ec5fa7f3ee6"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_upper</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil8to_upperERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Converts std::string to upper case. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - std::string that needs to be converted. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Upper case input std::string. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil4trimERNSt6stringE">
+<span id="_CPPv3N7strutil4trimERNSt6stringE"></span><span id="_CPPv2N7strutil4trimERNSt6stringE"></span><span id="strutil::trim__ssR"></span><span class="target" id="namespacestrutil_1ad14bdffa299dfe752668fbea0896f002"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil4trimERNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims (in-place) white spaces from the both sides of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil9trim_copyENSt6stringE">
+<span id="_CPPv3N7strutil9trim_copyENSt6stringE"></span><span id="_CPPv2N7strutil9trim_copyENSt6stringE"></span><span id="strutil::trim_copy__ss"></span><span class="target" id="namespacestrutil_1a8364d95d72f1284b0dc385a3cb4580b2"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil9trim_copyENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims white spaces from the both sides of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of input str with trimmed white spaces. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil9trim_leftERNSt6stringE">
+<span id="_CPPv3N7strutil9trim_leftERNSt6stringE"></span><span id="_CPPv2N7strutil9trim_leftERNSt6stringE"></span><span id="strutil::trim_left__ssR"></span><span class="target" id="namespacestrutil_1aee34ef55f923ac8d0c4029b9ba419316"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim_left</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil9trim_leftERNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims (in-place) white spaces from the left side of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil14trim_left_copyENSt6stringE">
+<span id="_CPPv3N7strutil14trim_left_copyENSt6stringE"></span><span id="_CPPv2N7strutil14trim_left_copyENSt6stringE"></span><span id="strutil::trim_left_copy__ss"></span><span class="target" id="namespacestrutil_1af18f874cad7ad6dd0b900e41660ba3a9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim_left_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil14trim_left_copyENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims white spaces from the left side of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of input str with trimmed white spaces. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil10trim_rightERNSt6stringE">
+<span id="_CPPv3N7strutil10trim_rightERNSt6stringE"></span><span id="_CPPv2N7strutil10trim_rightERNSt6stringE"></span><span id="strutil::trim_right__ssR"></span><span class="target" id="namespacestrutil_1a37265467aaf1644efe8a08187856c473"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim_right</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil10trim_rightERNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims (in-place) white spaces from the right side of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7strutil15trim_right_copyENSt6stringE">
+<span id="_CPPv3N7strutil15trim_right_copyENSt6stringE"></span><span id="_CPPv2N7strutil15trim_right_copyENSt6stringE"></span><span id="strutil::trim_right_copy__ss"></span><span class="target" id="namespacestrutil_1ae9fd5fdaa554d2b32d8bb5d3bf26204b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim_right_copy</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7strutil15trim_right_copyENSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Trims white spaces from the right side of std::string. Taken from: <a class="reference external" href="http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring">http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring</a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>str</strong> – - input std::string to remove white spaces from. </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of input str with trimmed white spaces. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="strutil" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Tomasz Gałaj.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
