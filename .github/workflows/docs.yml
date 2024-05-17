@@ -17,8 +17,9 @@ jobs:
       uses: actions/checkout@v4
     - name: Install Python 
       uses: actions/setup-python@v3
-    - uses: ssciwr/doxygen-install@v1
-    - name: Install dependencies
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
+    - name: Install Dependencies
       run: |
         pip install sphinx sphinx_rtd_theme sphinx-sitemap breathe docutils
     - name: Sphinx Build
@@ -27,8 +28,7 @@ jobs:
         make html
         cd temp_build/html
         touch .nojekyll
-        #sphinx-build docs temp_build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: docs/temp_build/html # The folder the action should deploy.
+        folder: docs/temp_build/html # The folder the action should deploy
