@@ -25,6 +25,6 @@ jobs:
       run: |
         sphinx-build docs temp_build
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: docs/temp_build/html # The folder the action should deploy.
