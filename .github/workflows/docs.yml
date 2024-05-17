@@ -15,6 +15,23 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
+    - name: install dependencies
+      run: |
+        pip install -r requirements/development.txt
+        sudo apt-get -y update
+        sudo apt-get -y install graphviz libclang1-11 libclang-cpp11
+
+    - name: install doxygen from SF binary archives
+      env:
+        DOXYGEN_VERSION: 1.9.4
+      run: |
+        mkdir doxygen-bin-arc && cd doxygen-bin-arc
+        curl -L https://sourceforge.net/projects/doxygen/files/rel-$DOXYGEN_VERSION/doxygen-$DOXYGEN_VERSION.linux.bin.tar.gz > doxygen.tar.gz
+        gunzip doxygen.tar.gz
+        tar xf doxygen.tar
+        cd doxygen-$DOXYGEN_VERSION
+        sudo make install
+
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
