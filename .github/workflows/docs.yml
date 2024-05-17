@@ -16,10 +16,11 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
     - uses: actions/setup-python@v3
+    - uses: ssciwr/doxygen-install@v1
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
-        pre-build-command: "apt-get update -y && apt-get install -y doxygen && pip install sphinx_rtd_theme breathe sphinx-sitemap"
+        pre-build-command: "pip install sphinx_rtd_theme breathe sphinx-sitemap"
         docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
