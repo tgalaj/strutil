@@ -18,7 +18,7 @@ jobs:
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
-        pre-build-command: "sudo apt-get update -y && sudo apt-get install -y doxygen"
+        pre-build-command: "sudo apt-get update -y && sudo apt-get install -y doxygen && pip install breathe"
         docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
