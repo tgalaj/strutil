@@ -15,8 +15,8 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-    - uses: actions/setup-python@v3
-    - uses: ssciwr/doxygen-install@v1
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
