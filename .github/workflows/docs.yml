@@ -19,6 +19,7 @@ jobs:
       uses: actions/setup-python@v3
     - name: Install dependencies
       run: |
+        apt-get update -y && apt-get install doxygen graphviz -y
         pip install sphinx sphinx_rtd_theme sphinx-sitemap breathe docutils
     - name: Sphinx Build
       run: |
