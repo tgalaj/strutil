@@ -488,8 +488,8 @@ namespace strutil
      * @tparam Container - container type.
      * @param tokens - container of strings.
      */
-    template<template<typename> typename Container>
-    static inline void drop_empty(Container<std::string> & tokens)
+    template<template<typename, typename...> typename Container, typename... Args>
+    static inline void drop_empty(Container<std::string, Args...> & tokens)
     {
         auto last = std::erase_if(tokens, [](auto& s){ return s.empty(); });
     }
@@ -500,10 +500,10 @@ namespace strutil
      * @param tokens - container of strings.
      * @return container of non-empty tokens.
      */
-    template<template<typename> typename Container>
-    static inline Container<std::string> drop_empty_copy(Container<std::string> tokens)
+    template<template<typename, typename...> typename Container, typename... Args>
+    static inline Container<std::string> drop_empty_copy(Container<std::string, Args...> tokens)
     {
-        drop_empty<Container>(tokens);
+        drop_empty(tokens);
         return tokens;
     }
 

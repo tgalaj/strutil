@@ -470,7 +470,7 @@ TEST(SplittingSet, join)
 TEST(SplittingDropEmptyVector, drop_empty)
 {
     std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
-    strutil::drop_empty<std::vector>(tokens);
+    strutil::drop_empty(tokens);
     ASSERT_EQ(tokens.size(), 3);
     ASSERT_EQ(tokens[0], "t1");
     ASSERT_EQ(tokens[1], "t2");
@@ -480,7 +480,7 @@ TEST(SplittingDropEmptyVector, drop_empty)
 TEST(SplittingDropEmptyCopyVector, drop_empty_copy)
 {
     std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
-    auto res = strutil::drop_empty_copy<std::vector>(tokens);
+    auto res = strutil::drop_empty_copy(tokens);
     ASSERT_EQ(res.size(), 3);
     ASSERT_EQ(res[0], "t1");
     ASSERT_EQ(res[1], "t2");
@@ -490,7 +490,7 @@ TEST(SplittingDropEmptyCopyVector, drop_empty_copy)
 TEST(SplittingDropEmptySet, drop_empty)
 {
     std::set<std::string> tokens = { "t1", "t2", "", "t4", ""};
-    strutil::drop_empty<std::set>(tokens);
+    strutil::drop_empty(tokens);
     auto it = tokens.begin();
 
     ASSERT_EQ(tokens.size(), 3);
@@ -502,7 +502,7 @@ TEST(SplittingDropEmptySet, drop_empty)
 TEST(SplittingDropEmptyCopySet, drop_empty_copy)
 {
     std::set<std::string> tokens = { "t1", "t2", "", "t4", "" };
-    auto res = strutil::drop_empty_copy<std::set>(tokens);
+    auto res = strutil::drop_empty_copy(tokens);
     auto it  = res.begin();
 
     ASSERT_EQ(res.size(), 3);
