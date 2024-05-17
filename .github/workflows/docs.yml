@@ -20,7 +20,6 @@ jobs:
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
-        pre-build-command: "pip install sphinx_rtd_theme breathe sphinx-sitemap"
         docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3

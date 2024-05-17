@@ -28,7 +28,7 @@ copyright = u'2022, Tomasz Gałaj'
 author = u'Tomasz Gałaj'
 
 # The short X.Y version
-version = u''
+version = u'2.0'
 # The full version, including alpha/beta/rc tags
 release = u''
 
