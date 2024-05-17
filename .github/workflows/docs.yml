@@ -25,4 +25,4 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        folder: docs/_build/html # The folder the action should deploy.
+        folder: docs/temp_build/html # The folder the action should deploy.
