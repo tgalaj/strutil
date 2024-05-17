@@ -15,11 +15,14 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-    - name: Build the Docs
-      uses: ammaraskar/sphinx-action@master
-      with:
-        pre-build-command: "apt-get update -y && apt-get install -y doxygen"
-        docs-folder: "docs/"
+    - name: Install Python 
+      uses: actions/setup-python@v3
+    - name: Install dependencies
+      run: |
+        pip install sphinx sphinx_rtd_theme sphinx-sitemap breathe docutils
+    - name: Sphinx Build
+      run: |
+        sphinx-build docs temp_build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
