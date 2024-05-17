@@ -1,9 +1,7 @@
 name: Docs
 
 on:
-  #push:
-  #  branches-ignore:
-  #    - '**'  
+  workflow_dispatch:
   push:
     branches: [ master ]
   pull_request:
@@ -12,25 +10,20 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Install Requirements
-      run: brew install doxygen
-        && brew install sphinx-doc
-        && pip3 install sphinx-rtd-theme
-        && pip3 install breathe
-        && pip3 install sphinx-sitemap
     - name: Checkout Repo
-      uses: actions/checkout@1.0.0
-    - name: Build Docs
-      run: cd docs
-        && make html
-        && cd temp_build/html
-        && touch .nojekyll
+      uses: actions/checkout@v4
+    - uses: actions/setup-python@v3
+    - name: Build the Docs
+      uses: ammaraskar/sphinx-action@master
+      with:
+        pre-build-command: "apt-get update -y && apt-get install -y doxygen && pip install sphinx_rtd_theme breathe sphinx-sitemap"
+        docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: docs/temp_build/html # The folder the action should deploy.
+        FOLDER: docs/_build/html # The folder the action should deploy.
