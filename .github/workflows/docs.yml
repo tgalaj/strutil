@@ -17,9 +17,9 @@ jobs:
       uses: actions/checkout@v4
     - name: Install Python 
       uses: actions/setup-python@v3
+    - uses: ssciwr/doxygen-install@v1
     - name: Install dependencies
       run: |
-        apt-get update -y && apt-get install doxygen graphviz -y
         pip install sphinx sphinx_rtd_theme sphinx-sitemap breathe docutils
     - name: Sphinx Build
       run: |
