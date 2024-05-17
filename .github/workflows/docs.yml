@@ -20,7 +20,6 @@ jobs:
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
-        pre-build-command: make clean
         docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
