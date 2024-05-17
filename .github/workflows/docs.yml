@@ -23,7 +23,11 @@ jobs:
         pip install sphinx sphinx_rtd_theme sphinx-sitemap breathe docutils
     - name: Sphinx Build
       run: |
-        sphinx-build docs temp_build
+        cd docs
+        make html
+        cd temp_build/html
+        touch .nojekyll
+        #sphinx-build docs temp_build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
