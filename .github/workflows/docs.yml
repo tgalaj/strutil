@@ -20,6 +20,7 @@ jobs:
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
+        build-command: "sphinx-build source _build -b html -w /tmp/sphinx.log -E"
         docs-folder: "docs/"
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
