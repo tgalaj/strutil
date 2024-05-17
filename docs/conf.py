@@ -28,7 +28,7 @@ copyright = u'2022, Tomasz Gałaj'
 author = u'Tomasz Gałaj'
 
 # The short X.Y version
-version = u''
+version = u'2.0'
 # The full version, including alpha/beta/rc tags
 release = u''
 
@@ -228,7 +228,7 @@ breathe_default_members = ('members', 'undoc-members')
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
 
 # -- Options for todo extension ----------------------------------------------
 
