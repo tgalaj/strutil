@@ -1,7 +1,7 @@
  /**
  ******************************************************************************
  *
- *  @mainpage strutil v1.0.2 - header-only string utility library documentation
+ *  @mainpage strutil v2.0.0 - header-only string utility library documentation
  *  @see https://github.com/Shot511/strutil
  *
  *  @copyright  Copyright (C) 2024 Tomasz Galaj
@@ -20,6 +20,7 @@
 #include <execution>
 #include <map>
 #include <regex>
+#include <set>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -487,11 +488,10 @@ namespace strutil
      * @tparam Container - container type.
      * @param tokens - container of strings.
      */
-    template<template<class> class Container>
+    template<template<typename> typename Container>
     static inline void drop_empty(Container<std::string> & tokens)
     {
-        auto last = std::remove_if(tokens.begin(), tokens.end(), [](const std::string& s){ return s.empty(); });
-        tokens.erase(last, tokens.end());
+        auto last = std::erase_if(tokens, [](auto& s){ return s.empty(); });
     }
 
     /**
@@ -500,10 +500,10 @@ namespace strutil
      * @param tokens - container of strings.
      * @return container of non-empty tokens.
      */
-    template<template<class> class Container>
+    template<template<typename> typename Container>
     static inline Container<std::string> drop_empty_copy(Container<std::string> tokens)
     {
-        drop_empty(tokens);
+        drop_empty<Container>(tokens);
         return tokens;
     }
 

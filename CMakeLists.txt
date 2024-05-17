@@ -40,7 +40,7 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(${PROJECT_NAME} tests/strutil_tests.cpp tests/test_cases.cpp strutil.h)
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
 if (COVERAGE)
     target_compile_options(${PROJECT_NAME} PRIVATE --coverage)

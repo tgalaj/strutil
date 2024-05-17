@@ -24,7 +24,7 @@ subprocess.call('doxygen Doxyfile.in', shell=True)
 # -- Project information -----------------------------------------------------
 
 project = u'strutil'
-copyright = u'2022, Tomasz Gałaj'
+copyright = u'2024, Tomasz Gałaj'
 author = u'Tomasz Gałaj'
 
 # The short X.Y version

@@ -439,41 +439,76 @@ TEST(Regexsplitting_map, regex_split_map)
             ASSERT_EQ(str, ans[each.first]);
         }
     }
-
-    // TODO: More test is to be added.
 }
 
-TEST(Splitting, join)
+TEST(SplittingVector, join)
 {
     std::string str1 = "Col1;Col2;Col3";
     std::vector<std::string> tokens1 = { "Col1", "Col2", "Col3" };
 
-    EXPECT_EQ(str1, strutil::join<std::string>(tokens1, ";"));
+    EXPECT_EQ(str1, strutil::join(tokens1, ";"));
 
     std::string str2 = "1|2|3";
     std::vector<unsigned> tokens2 = { 1, 2, 3 };
 
-    EXPECT_EQ(str2, strutil::join<unsigned>(tokens2, "|"));
+    EXPECT_EQ(str2, strutil::join(tokens2, "|"));
 }
 
-TEST(Splitting, drop_empty)
+TEST(SplittingSet, join)
+{
+    std::string str1 = "Col1;Col2;Col3";
+    std::set<std::string> tokens1 = { "Col1", "Col2", "Col3" };
+
+    EXPECT_EQ(str1, strutil::join(tokens1, ";"));
+
+    std::string str2 = "1|2|3";
+    std::set<unsigned> tokens2 = { 1, 2, 3 };
+
+    EXPECT_EQ(str2, strutil::join(tokens2, "|"));
+}
+
+TEST(SplittingDropEmptyVector, drop_empty)
 {
     std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
-    strutil::drop_empty(tokens);
+    strutil::drop_empty<std::vector>(tokens);
     ASSERT_EQ(tokens.size(), 3);
     ASSERT_EQ(tokens[0], "t1");
     ASSERT_EQ(tokens[1], "t2");
     ASSERT_EQ(tokens[2], "t4");
 }
 
-TEST(Splitting, drop_empty_copy)
+TEST(SplittingDropEmptyCopyVector, drop_empty_copy)
 {
     std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
-    auto res = strutil::drop_empty_copy(tokens);
+    auto res = strutil::drop_empty_copy<std::vector>(tokens);
     ASSERT_EQ(res.size(), 3);
     ASSERT_EQ(res[0], "t1");
     ASSERT_EQ(res[1], "t2");
     ASSERT_EQ(res[2], "t4");
+}
+
+TEST(SplittingDropEmptySet, drop_empty)
+{
+    std::set<std::string> tokens = { "t1", "t2", "", "t4", ""};
+    strutil::drop_empty<std::set>(tokens);
+    auto it = tokens.begin();
+
+    ASSERT_EQ(tokens.size(), 3);
+    ASSERT_EQ(*(  it), "t1");
+    ASSERT_EQ(*(++it), "t2");
+    ASSERT_EQ(*(++it), "t4");
+}
+
+TEST(SplittingDropEmptyCopySet, drop_empty_copy)
+{
+    std::set<std::string> tokens = { "t1", "t2", "", "t4", "" };
+    auto res = strutil::drop_empty_copy<std::set>(tokens);
+    auto it  = res.begin();
+
+    ASSERT_EQ(res.size(), 3);
+    ASSERT_EQ(*(  it), "t1");
+    ASSERT_EQ(*(++it), "t2");
+    ASSERT_EQ(*(++it), "t4");
 }
 
 TEST(TestDropDuplicate, drop_duplicate)
