@@ -15,8 +15,6 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
-    - name: Install Doxygen
-      uses: ssciwr/doxygen-install@v1
     - name: Build the Docs
       uses: ammaraskar/sphinx-action@master
       with:
