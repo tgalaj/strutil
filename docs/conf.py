@@ -220,7 +220,7 @@ epub_exclude_files = ['search.html']
 # -- Breathe configuration ---------------------------------------------------
 
 breathe_projects = {
-	"strutil": "_build/xml/"
+	"strutil": "_build/source/xml/"
 }
 breathe_default_project = "strutil"
 breathe_default_members = ('members', 'undoc-members')
