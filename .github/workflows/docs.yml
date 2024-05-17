@@ -17,7 +17,6 @@ jobs:
       uses: actions/checkout@v4
     - name: install dependencies
       run: |
-        pip install -r requirements/development.txt
         sudo apt-get -y update
         sudo apt-get -y install graphviz libclang1-11 libclang-cpp11
 
