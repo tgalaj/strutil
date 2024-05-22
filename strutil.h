@@ -1,7 +1,7 @@
  /**
  ******************************************************************************
  *
- *  @mainpage strutil v2.0.0 - header-only string utility library documentation
+ *  @mainpage strutil v1.1.0 - header-only string utility library documentation
  *  @see https://github.com/Shot511/strutil
  *
  *  @copyright  Copyright (C) 2024 Tomasz Galaj
