@@ -71,8 +71,6 @@ markdown_extensions:
 
 nav:
   - Home: 'index.md'
-  - API:
-    - strutil:
-      - 'strutil': 'strutil/namespacestrutil.md'
+  - API: 'strutil/namespacestrutil.md'
 
 use_directory_urls: true # (optional) for better links without .html extension
