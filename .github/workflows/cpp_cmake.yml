@@ -33,7 +33,7 @@ jobs:
     - name: Install lcov and Generate lcov.info
       run: |
         sudo apt-get install lcov
-        lcov --c --directory . --output-file lcovi.info
+        lcov --c --directory . --output-file lcovi.info --ignore-errors mismatch
         lcov -e lcovi.info "*strutil/tests/*" -e lcovi.info "*strutil/strutil.h" -o lcov.info
         
     - name: Coveralls
