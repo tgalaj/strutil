@@ -4,7 +4,7 @@
 
 # strutil v1.1.0 - header-only string utility library documentation
 
-A comprehensive, header-only C++20 string utility library that makes string manipulation simple and intuitive. Designed for developers who need reliable string processing without external dependencies.
+A comprehensive, header-only C++17 string utility library that makes string manipulation simple and intuitive. Designed for developers who need reliable string processing without external dependencies.
 
 We welcome any constructive feedback and contributions to help make this library even better.
 

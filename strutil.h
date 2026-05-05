@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2026 Tomasz Galaj
+ */
+
 #pragma once
 
 #include <algorithm>
@@ -8,6 +12,7 @@
 #include <set>
 #include <sstream>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 //! The strutil namespace
@@ -326,9 +331,11 @@ namespace strutil
      * @brief Splits input std::string str according to input delim.
      * @param str - std::string that will be splitted.
      * @param delim - the delimiter.
+     * @param keep_empty - if true (default), empty tokens are kept in the result;
+     *                     if false, empty tokens are skipped.
      * @return std::vector<std::string> that contains all splitted tokens.
      */
-    static inline std::vector<std::string> split(const std::string & str, const char delim)
+    static inline std::vector<std::string> split(const std::string & str, const char delim, bool keep_empty = true)
     {
         std::vector<std::string> tokens;
         std::stringstream ss(str);
@@ -336,11 +343,15 @@ namespace strutil
         std::string token;
         while(std::getline(ss, token, delim))
         {
-            tokens.push_back(token);
+            if (keep_empty || !token.empty())
+            {
+                tokens.push_back(token);
+            }
         }
 
-        // Match semantics of split(str,str)
-        if (str.empty() || ends_with(str, delim)) {
+        // Match semantics of split(str,str): preserve trailing empty token only when keeping empties.
+        if (keep_empty && (str.empty() || ends_with(str, delim)))
+        {
             tokens.emplace_back();
         }
 
@@ -352,9 +363,11 @@ namespace strutil
      *        Taken from: https://stackoverflow.com/a/46931770/1892346.
      * @param str - std::string that will be split.
      * @param delim - the delimiter.
+     * @param keep_empty - if true (default), empty tokens are kept in the result;
+     *                     if false, empty tokens are skipped.
      * @return std::vector<std::string> that contains all splitted tokens.
      */
-    static inline std::vector<std::string> split(const std::string & str, const std::string & delim)
+    static inline std::vector<std::string> split(const std::string & str, const std::string & delim, bool keep_empty = true)
     {
         size_t pos_start = 0, pos_end, delim_len = delim.length();
         std::string token;
@@ -364,10 +377,17 @@ namespace strutil
         {
             token = str.substr(pos_start, pos_end - pos_start);
             pos_start = pos_end + delim_len;
-            tokens.push_back(token);
+            if (keep_empty || !token.empty())
+            {
+                tokens.push_back(token);
+            }
         }
 
-        tokens.push_back(str.substr(pos_start));
+        token = str.substr(pos_start);
+        if (keep_empty || !token.empty())
+        {
+            tokens.push_back(token);
+        }
         return tokens;
     }
 
@@ -375,9 +395,11 @@ namespace strutil
      * @brief Splits input string using regex as a delimiter.
      * @param src - std::string that will be split.
      * @param rgx_str - the set of delimiter characters.
+     * @param keep_empty - if true (default), empty tokens are kept in the result;
+     *                     if false, empty tokens are skipped.
      * @return vector of resulting tokens.
      */
-    static inline std::vector<std::string> regex_split(const std::string& src, const std::string& rgx_str)
+    static inline std::vector<std::string> regex_split(const std::string& src, const std::string& rgx_str, bool keep_empty = true)
     {
         std::vector<std::string> elems;
         const std::regex rgx(rgx_str);
@@ -385,7 +407,10 @@ namespace strutil
         std::sregex_token_iterator end;
         while (iter != end)
         {
-            elems.push_back(*iter);
+            if (keep_empty || iter->length() != 0)
+            {
+                elems.push_back(*iter);
+            }
             ++iter;
         }
         return elems;
@@ -421,9 +446,11 @@ namespace strutil
      * @brief Splits input string using any delimiter in the given set.
      * @param str - std::string that will be split.
      * @param delims - the set of delimiter characters.
+     * @param keep_empty - if true (default), empty tokens are kept in the result;
+     *                     if false, empty tokens are skipped.
      * @return vector of resulting tokens.
      */
-    static inline std::vector<std::string> split_any(const std::string & str, const std::string & delims)
+    static inline std::vector<std::string> split_any(const std::string & str, const std::string & delims, bool keep_empty = true)
     {
         std::string token;
         std::vector<std::string> tokens;
@@ -434,12 +461,19 @@ namespace strutil
             if (contains(delims, str[pos_end]))
             {
                 token = str.substr(pos_start, pos_end - pos_start);
-                tokens.push_back(token);
+                if (keep_empty || !token.empty())
+                {
+                    tokens.push_back(token);
+                }
                 pos_start = pos_end + 1;
             }
         }
 
-        tokens.push_back(str.substr(pos_start));
+        token = str.substr(pos_start);
+        if (keep_empty || !token.empty())
+        {
+            tokens.push_back(token);
+        }
         return tokens;
     }
 
@@ -468,15 +502,52 @@ namespace strutil
         return result.str();
     }
 
+    namespace detail
+    {
+        // Detects associative containers (std::set, std::map, ...) by the
+        // presence of a nested key_type. Used to dispatch drop_empty to an
+        // implementation that does not rely on the erase-remove idiom, since
+        // those containers expose only const iterators.
+        template<typename, typename = void>
+        struct has_key_type : std::false_type {};
+
+        template<typename T>
+        struct has_key_type<T, std::void_t<typename T::key_type>> : std::true_type {};
+    }
+
     /**
-     * @brief Inplace removal of all empty strings in a container of strings
+     * @brief Inplace removal of all empty strings in a container of strings.
+     *        Works uniformly for sequence containers (std::vector, std::deque,
+     *        ...) and associative containers (std::set, ...).
      * @tparam Container - container type.
      * @param tokens - container of strings.
      */
     template<template<typename, typename...> typename Container, typename... Args>
     static inline void drop_empty(Container<std::string, Args...> & tokens)
     {
-        auto last = std::erase_if(tokens, [](auto& s){ return s.empty(); });
+        using container_type = Container<std::string, Args...>;
+        if constexpr (detail::has_key_type<container_type>::value)
+        {
+            // Associative container: erase by iterator and use the returned
+            // next iterator to keep traversal valid.
+            for (auto it = tokens.begin(); it != tokens.end(); )
+            {
+                if (it->empty())
+                {
+                    it = tokens.erase(it);
+                }
+                else
+                {
+                    ++it;
+                }
+            }
+        }
+        else
+        {
+            tokens.erase(std::remove_if(tokens.begin(), tokens.end(),
+                            [](const std::string & s) { return s.empty(); }),
+                         tokens.end());
+        }
     }
 
     /**

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Tomasz Galaj
+ * Copyright (C) 2026 Tomasz Galaj
  */
 
 #include <gtest/gtest.h>

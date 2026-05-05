@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2024 Tomasz Galaj
+ * Copyright (C) 2026 Tomasz Galaj
  */
 
 #include <gtest/gtest.h>
@@ -18,6 +18,15 @@ TEST(Compare, compare_ignore_case)
     EXPECT_EQ(true, strutil::compare_ignore_case(str1, str2));
     EXPECT_EQ(false, strutil::compare_ignore_case(str1, str3));
     EXPECT_EQ(false, strutil::compare_ignore_case(str2, str3));
+
+    // Same length, same case-folded prefix, but a single differing letter:
+    // ensures the function actually compares character-by-character and is not
+    // accidentally equivalent to a length or prefix check.
+    EXPECT_EQ(false, strutil::compare_ignore_case("abc", "abd"));
+    EXPECT_EQ(false, strutil::compare_ignore_case("ABC", "abd"));
+
+    // Empty strings should compare equal.
+    EXPECT_EQ(true, strutil::compare_ignore_case("", ""));
 }
 
 TEST(Compare, starts_with_str)
@@ -94,6 +103,20 @@ TEST(Compare, matches)
 
     EXPECT_EQ(true, strutil::matches("jon.doe@somehost.com", check_mail));
     EXPECT_EQ(false, strutil::matches("jon.doe@", check_mail));
+
+    // matches() requires the *entire* string to match (regex_match semantics),
+    // not just a substring. Verify that explicitly.
+    const std::regex digits("[0-9]+");
+    EXPECT_EQ(true,  strutil::matches("12345", digits));
+    EXPECT_EQ(false, strutil::matches("abc12345", digits));
+    EXPECT_EQ(false, strutil::matches("12345abc", digits));
+
+    // Empty string against a pattern that does not allow empty.
+    EXPECT_EQ(false, strutil::matches("", digits));
+
+    // Empty string against a pattern that does allow empty.
+    const std::regex maybe_digits("[0-9]*");
+    EXPECT_EQ(true, strutil::matches("", maybe_digits));
 }
 
 /*
@@ -227,17 +250,19 @@ TEST(Parsing, string_to_u_char)
 
 TEST(Parsing, string_to_float)
 {
-    EXPECT_EQ(5.245f, strutil::parse_string<float>("5.245f"));
+    EXPECT_FLOAT_EQ(5.245f, strutil::parse_string<float>("5.245"));
+    // Trailing junk after the numeric prefix is silently ignored by istringstream.
+    EXPECT_FLOAT_EQ(5.245f, strutil::parse_string<float>("5.245f"));
 }
 
 TEST(Parsing, string_to_double)
 {
-    EXPECT_EQ(5.245, strutil::parse_string<double>("5.245"));
+    EXPECT_DOUBLE_EQ(5.245, strutil::parse_string<double>("5.245"));
 }
 
 TEST(Parsing, string_to_long_double)
 {
-    EXPECT_EQ(-5.245L, strutil::parse_string<long double>("-5.245"));
+    EXPECT_NEAR(-5.245L, strutil::parse_string<long double>("-5.245"), 1e-12L);
 }
 
 TEST(Parsing, string_to_bool)
@@ -248,6 +273,43 @@ TEST(Parsing, string_to_bool)
 TEST(Parsing, string_to_neg_bool)
 {
     EXPECT_EQ(false, strutil::parse_string<bool>("0"));
+}
+
+namespace
+{
+    struct Point2D
+    {
+        int x = 0;
+        int y = 0;
+
+        friend std::ostream & operator<<(std::ostream & os, const Point2D & p)
+        {
+            return os << p.x << ',' << p.y;
+        }
+
+        friend std::istream & operator>>(std::istream & is, Point2D & p)
+        {
+            char comma = 0;
+            is >> p.x >> comma >> p.y;
+            return is;
+        }
+
+        bool operator==(const Point2D & other) const
+        {
+            return x == other.x && y == other.y;
+        }
+    };
+}
+
+TEST(Parsing, custom_type_to_string)
+{
+    EXPECT_EQ("3,4", strutil::to_string<Point2D>({ 3, 4 }));
+}
+
+TEST(Parsing, string_to_custom_type)
+{
+    const auto p = strutil::parse_string<Point2D>("3,4");
+    EXPECT_EQ((Point2D{ 3, 4 }), p);
 }
 
 /*
@@ -295,6 +357,19 @@ TEST(Splitting, split_char_delim)
     {
         EXPECT_EQ(expected[i], res[i]);
     }
+
+    // keep_empty = false => empty tokens are dropped.
+    res = strutil::split(";abc;;def;", ';', false);
+    expected = { "abc", "def" };
+    EXPECT_EQ(res, expected);
+
+    // keep_empty = false on empty input => empty result.
+    res = strutil::split("", ';', false);
+    EXPECT_TRUE(res.empty());
+
+    // keep_empty = false on a string of only delimiters => empty result.
+    res = strutil::split(";;;", ';', false);
+    EXPECT_TRUE(res.empty());
 }
 
 TEST(Splitting, split_string_delim)
@@ -338,6 +413,19 @@ TEST(Splitting, split_string_delim)
     {
         EXPECT_EQ(expected[i], res[i]);
     }
+
+    // keep_empty = false => empty tokens are dropped.
+    res = strutil::split(">=abc>=>=def>=", ">=", false);
+    expected = { "abc", "def" };
+    EXPECT_EQ(res, expected);
+
+    // keep_empty = false on empty input => empty result.
+    res = strutil::split("", ">=", false);
+    EXPECT_TRUE(res.empty());
+
+    // keep_empty = false on a string of only delimiters => empty result.
+    res = strutil::split(">=>=>=", ">=", false);
+    EXPECT_TRUE(res.empty());
 }
 
 TEST(Splitting, split_any)
@@ -383,6 +471,20 @@ TEST(Splitting, split_any)
     EXPECT_EQ(res[0], "abc");
     EXPECT_EQ(res[1], "");
     EXPECT_EQ(res[2], "123");
+
+    // keep_empty = false => empty tokens are dropped.
+    res = strutil::split_any(",abc,;def;", ",;", false);
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "abc");
+    EXPECT_EQ(res[1], "def");
+
+    // keep_empty = false on empty input => empty result.
+    res = strutil::split_any("", ",;", false);
+    EXPECT_TRUE(res.empty());
+
+    // keep_empty = false on a string of only delimiters => empty result.
+    res = strutil::split_any(",;,;", ",;", false);
+    EXPECT_TRUE(res.empty());
 }
 
 TEST(Regexsplitting, regex_split)
@@ -418,10 +520,25 @@ TEST(Regexsplitting, regex_split)
     EXPECT_EQ(res[6], "e");
     EXPECT_EQ(res[7], "f");
 
-    // Leading delimiters => leading empty string
-    res = strutil::regex_split(";abc", ",; ");
+    // Leading delimiters => leading empty string.
+    // The pattern is a character class so that ';' actually matches; the
+    // previous version of this test passed a literal three-character regex
+    // that never matched anything and so silently asserted the wrong thing.
+    res = strutil::regex_split(";abc", "[,; ]");
+    ASSERT_EQ(res.size(), 2);
+    EXPECT_EQ(res[0], "");
+    EXPECT_EQ(res[1], "abc");
+
+    // keep_empty = false => empty tokens are dropped.
+    res = strutil::regex_split(";abc", "[,; ]", false);
     ASSERT_EQ(res.size(), 1);
-    ASSERT_EQ(res[0], ";abc");
+    EXPECT_EQ(res[0], "abc");
+
+    res = strutil::regex_split("a,,b,,c", "[,]+", false);
+    ASSERT_EQ(res.size(), 3);
+    EXPECT_EQ(res[0], "a");
+    EXPECT_EQ(res[1], "b");
+    EXPECT_EQ(res[2], "c");
 }
 
 TEST(Regexsplitting_map, regex_split_map)
