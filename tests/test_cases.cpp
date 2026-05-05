@@ -647,6 +647,27 @@ TEST(TestDropDuplicateCopy, drop_duplicate_copy)
     EXPECT_EQ(std::equal(str2.cbegin(), str2.cend(), str3.cbegin()), true);
 }
 
+#ifdef STRUTIL_ENABLE_PARALLEL
+TEST(TestDropDuplicatePar, drop_duplicate_par)
+{
+    std::vector<std::string> str1 = { "t1", "t2", "", "t4", "", "t1"};
+    strutil::drop_duplicate_par(str1);
+
+    std::vector<std::string> str2 = { "", "t1", "t2", "t4"};
+
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TestDropDuplicateCopyPar, drop_duplicate_copy_par)
+{
+    std::vector<std::string> str1 = { "t1", "t2", "", "t4", "", "t1"};
+    auto str3 = strutil::drop_duplicate_copy_par(str1);
+
+    std::vector<std::string> str2 = { "", "t1", "t2", "t4"};
+    EXPECT_EQ(std::equal(str2.cbegin(), str2.cend(), str3.cbegin()), true);
+}
+#endif // STRUTIL_ENABLE_PARALLEL
+
 /*
  * Text manipulation tests
  */
@@ -801,6 +822,26 @@ TEST(TextSortDescending, sorting_descending)
     std::vector<std::string> str2 = {"bcd", "abc", "ABC", "123", "-100", "-", "  ", ""};
     EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
 }
+
+#ifdef STRUTIL_ENABLE_PARALLEL
+TEST(TextSortAscendingPar, sorting_ascending_par)
+{
+    std::vector<std::string> str1 = {"ABC", "abc", "bcd", "", "-", "  ", "123", "-100"};
+    strutil::sorting_ascending_par(str1);
+
+    std::vector<std::string> str2 = {"", "  ", "-", "-100", "123", "ABC", "abc", "bcd"};
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+
+TEST(TextSortDescendingPar, sorting_descending_par)
+{
+    std::vector<std::string> str1 = {"ABC", "abc", "bcd", "", "-", "  ", "123", "-100"};
+    strutil::sorting_descending_par(str1);
+
+    std::vector<std::string> str2 = {"bcd", "abc", "ABC", "123", "-100", "-", "  ", ""};
+    EXPECT_EQ(std::equal(str1.cbegin(), str1.cend(), str2.cbegin()), true);
+}
+#endif // STRUTIL_ENABLE_PARALLEL
 
 TEST(TextReverseInplace, reverse_inplace)
 {

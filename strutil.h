@@ -6,14 +6,18 @@
 
 #include <algorithm>
 #include <cctype>
-#include <execution>
 #include <map>
+#include <optional>
 #include <regex>
 #include <set>
 #include <sstream>
 #include <string>
 #include <type_traits>
 #include <vector>
+
+#ifdef STRUTIL_ENABLE_PARALLEL
+#  include <execution>
+#endif
 
 //! The strutil namespace
 namespace strutil
@@ -26,7 +30,7 @@ namespace strutil
      * @return Converted value as std::string.
      */
     template<typename T>
-    static inline std::string to_string(T value)
+    inline std::string to_string(T value)
     {
         std::stringstream ss;
         ss << value;
@@ -36,17 +40,43 @@ namespace strutil
 
     /**
      * @brief Converts std::string into any datatype.
-     *        Datatype must support << operator.
+     *        Datatype must support >> operator.
+     *        On parse failure the result is value-initialized (e.g. 0 for
+     *        arithmetic types, false for bool). Use try_parse_string if you
+     *        need to distinguish failure from a legitimate zero/default value.
      * @tparam T
      * @param str - std::string that will be converted into datatype T.
-     * @return Variable of datatype T.
+     * @return Variable of datatype T, or T{} on parse failure.
      */
     template<typename T>
-    static inline T parse_string(const std::string & str)
+    inline T parse_string(const std::string & str)
     {
-        T result;
+        T result{};
         std::istringstream(str) >> result;
 
+        return result;
+    }
+
+    /**
+     * @brief Like parse_string, but reports failure explicitly via std::optional.
+     *        Returns std::nullopt if the input could not be parsed as T.
+     *        Note: trailing junk after a valid prefix is ignored (this matches
+     *        std::istringstream semantics), e.g. try_parse_string<int>("42abc")
+     *        returns 42, not nullopt.
+     * @tparam T
+     * @param str - std::string that will be converted into datatype T.
+     * @return std::optional<T> containing the parsed value, or std::nullopt on failure.
+     */
+    template<typename T>
+    inline std::optional<T> try_parse_string(const std::string & str)
+    {
+        T result{};
+        std::istringstream iss(str);
+        iss >> result;
+        if (iss.fail())
+        {
+            return std::nullopt;
+        }
         return result;
     }
 
@@ -55,7 +85,7 @@ namespace strutil
      * @param str - std::string that needs to be converted.
      * @return Lower case input std::string.
      */
-    static inline std::string to_lower(const std::string & str)
+    inline std::string to_lower(const std::string & str)
     {
         auto result = str;
         std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) -> unsigned char
@@ -71,7 +101,7 @@ namespace strutil
      * @param str - std::string that needs to be converted.
      * @return Upper case input std::string.
      */
-    static inline std::string to_upper(const std::string & str)
+    inline std::string to_upper(const std::string & str)
     {
         auto result = str;
         std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) -> unsigned char
@@ -87,7 +117,7 @@ namespace strutil
      * @param str - input string to be capitalized.
      * @return A string with the first letter capitalized and all other characters lowercased. It doesn't modify the input string.
      */
-    static inline std::string capitalize(const std::string & str)
+    inline std::string capitalize(const std::string & str)
     {
         auto result = str;
         if (!result.empty())
@@ -103,7 +133,7 @@ namespace strutil
      * @param str - input string to be modified.
      * @return A string with the first letter capitalized. All other characters stay unchanged. It doesn't modify the input string.
      */
-    static inline std::string capitalize_first_char(const std::string & str)
+    inline std::string capitalize_first_char(const std::string & str)
     {
         auto result = to_lower(str);
         if (!result.empty())
@@ -120,7 +150,7 @@ namespace strutil
      * @param substring - searched substring.
      * @return True if substring was found in str, false otherwise.
      */
-    static inline bool contains(const std::string & str, const std::string & substring)
+    inline bool contains(const std::string & str, const std::string & substring)
     {
         return str.find(substring) != std::string::npos;
     }
@@ -131,9 +161,9 @@ namespace strutil
      * @param character - searched character.
      * @return True if character was found in str, false otherwise.
      */
-    static inline bool contains(const std::string & str, const char character)
+    inline bool contains(const std::string & str, const char character)
     {
-        return contains(str, std::string(1, character));
+        return str.find(character) != std::string::npos;
     }
 
     /**
@@ -142,7 +172,7 @@ namespace strutil
      * @param str2 - std::string to compare
      * @return True if str1 and str2 are equal, false otherwise.
      */
-    static inline bool compare_ignore_case(const std::string & str1, const std::string & str2)
+    inline bool compare_ignore_case(const std::string & str1, const std::string & str2)
     {
         return to_lower(str1) == to_lower(str2);
     }
@@ -152,9 +182,9 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
      * @param str - input std::string to remove white spaces from.
      */
-    static inline void trim_left(std::string & str)
+    inline void trim_left(std::string & str)
     {
-        str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](int ch) { return !std::isspace(ch); }));
+        str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](unsigned char ch) { return !std::isspace(ch); }));
     }
 
     /**
@@ -162,9 +192,9 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
      * @param str - input std::string to remove white spaces from.
      */
-    static inline void trim_right(std::string & str)
+    inline void trim_right(std::string & str)
     {
-        str.erase(std::find_if(str.rbegin(), str.rend(), [](int ch) { return !std::isspace(ch); }).base(), str.end());
+        str.erase(std::find_if(str.rbegin(), str.rend(), [](unsigned char ch) { return !std::isspace(ch); }).base(), str.end());
     }
 
     /**
@@ -172,7 +202,7 @@ namespace strutil
      *        Taken from: http://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring.
      * @param str - input std::string to remove white spaces from.
      */
-    static inline void trim(std::string & str)
+    inline void trim(std::string & str)
     {
         trim_left(str);
         trim_right(str);
@@ -184,7 +214,7 @@ namespace strutil
       * @param str - input std::string to remove white spaces from.
       * @return Copy of input str with trimmed white spaces.
       */
-    static inline std::string trim_left_copy(std::string str)
+    inline std::string trim_left_copy(std::string str)
     {
         trim_left(str);
         return str;
@@ -196,7 +226,7 @@ namespace strutil
       * @param str - input std::string to remove white spaces from.
       * @return Copy of input str with trimmed white spaces.
       */
-    static inline std::string trim_right_copy(std::string str)
+    inline std::string trim_right_copy(std::string str)
     {
         trim_right(str);
         return str;
@@ -208,7 +238,7 @@ namespace strutil
       * @param str - input std::string to remove white spaces from.
       * @return Copy of input str with trimmed white spaces.
       */
-    static inline std::string trim_copy(std::string str)
+    inline std::string trim_copy(std::string str)
     {
         trim(str);
         return str;
@@ -222,7 +252,7 @@ namespace strutil
      * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_first(std::string & str, const std::string & target, const std::string & replacement)
+    inline bool replace_first(std::string & str, const std::string & target, const std::string & replacement)
     {
         const size_t start_pos = str.find(target);
         if (start_pos == std::string::npos)
@@ -242,7 +272,7 @@ namespace strutil
      * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_last(std::string & str, const std::string & target, const std::string & replacement)
+    inline bool replace_last(std::string & str, const std::string & target, const std::string & replacement)
     {
         size_t start_pos = str.rfind(target);
         if (start_pos == std::string::npos)
@@ -262,23 +292,23 @@ namespace strutil
      * @param replacement - substring that will replace target.
      * @return True if replacement was successfull, false otherwise.
      */
-    static inline bool replace_all(std::string & str, const std::string & target, const std::string & replacement)
+    inline bool replace_all(std::string & str, const std::string & target, const std::string & replacement)
     {
         if (target.empty())
         {
             return false;
         }
 
+        bool replaced = false;
         size_t start_pos = 0;
-        const bool found_substring = str.find(target, start_pos) != std::string::npos;
-
         while ((start_pos = str.find(target, start_pos)) != std::string::npos)
         {
             str.replace(start_pos, target.length(), replacement);
             start_pos += replacement.length();
+            replaced = true;
         }
 
-        return found_substring;
+        return replaced;
     }
 
     /**
@@ -287,11 +317,10 @@ namespace strutil
      * @param suffix - searched suffix in str.
      * @return True if suffix was found, false otherwise.
      */
-    static inline bool ends_with(const std::string & str, const std::string & suffix)
+    inline bool ends_with(const std::string & str, const std::string & suffix)
     {
-        const auto suffix_start = str.size() - suffix.size();
-        const auto result = str.find(suffix, suffix_start);
-        return (result == suffix_start) && (result != std::string::npos);
+        return suffix.size() <= str.size() &&
+               str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
     }
 
     /**
@@ -300,7 +329,7 @@ namespace strutil
      * @param suffix - searched character in str.
      * @return True if ends with character, false otherwise.
      */
-    static inline bool ends_with(const std::string & str, const char suffix)
+    inline bool ends_with(const std::string & str, const char suffix)
     {
         return !str.empty() && (str.back() == suffix);
     }
@@ -311,7 +340,7 @@ namespace strutil
      * @param prefix - searched prefix in str.
      * @return True if prefix was found, false otherwise.
      */
-    static inline bool starts_with(const std::string & str, const std::string & prefix)
+    inline bool starts_with(const std::string & str, const std::string & prefix)
     {
         return str.rfind(prefix, 0) == 0;
     }
@@ -322,7 +351,7 @@ namespace strutil
      * @param prefix - searched character in str.
      * @return True if starts with character, false otherwise.
      */
-    static inline bool starts_with(const std::string & str, const char prefix)
+    inline bool starts_with(const std::string & str, const char prefix)
     {
         return !str.empty() && (str.front() == prefix);
     }
@@ -335,7 +364,7 @@ namespace strutil
      *                     if false, empty tokens are skipped.
      * @return std::vector<std::string> that contains all splitted tokens.
      */
-    static inline std::vector<std::string> split(const std::string & str, const char delim, bool keep_empty = true)
+    inline std::vector<std::string> split(const std::string & str, const char delim, bool keep_empty = true)
     {
         std::vector<std::string> tokens;
         std::stringstream ss(str);
@@ -367,7 +396,7 @@ namespace strutil
      *                     if false, empty tokens are skipped.
      * @return std::vector<std::string> that contains all splitted tokens.
      */
-    static inline std::vector<std::string> split(const std::string & str, const std::string & delim, bool keep_empty = true)
+    inline std::vector<std::string> split(const std::string & str, const std::string & delim, bool keep_empty = true)
     {
         size_t pos_start = 0, pos_end, delim_len = delim.length();
         std::string token;
@@ -399,7 +428,7 @@ namespace strutil
      *                     if false, empty tokens are skipped.
      * @return vector of resulting tokens.
      */
-    static inline std::vector<std::string> regex_split(const std::string& src, const std::string& rgx_str, bool keep_empty = true)
+    inline std::vector<std::string> regex_split(const std::string& src, const std::string& rgx_str, bool keep_empty = true)
     {
         std::vector<std::string> elems;
         const std::regex rgx(rgx_str);
@@ -423,7 +452,7 @@ namespace strutil
      * @param rgx_str - the set of delimiter characters.
      * @return True if the parsing is successfully done.
      */
-    static inline std::map<std::string, std::string> regex_split_map(const std::string& src, const std::string& rgx_str)
+    inline std::map<std::string, std::string> regex_split_map(const std::string& src, const std::string& rgx_str)
     {
         std::map<std::string, std::string> dest;
         std::string tstr = src + " ";
@@ -450,7 +479,7 @@ namespace strutil
      *                     if false, empty tokens are skipped.
      * @return vector of resulting tokens.
      */
-    static inline std::vector<std::string> split_any(const std::string & str, const std::string & delims, bool keep_empty = true)
+    inline std::vector<std::string> split_any(const std::string & str, const std::string & delims, bool keep_empty = true)
     {
         std::string token;
         std::vector<std::string> tokens;
@@ -486,7 +515,7 @@ namespace strutil
      * @return std::string with joined elements of container tokens with delimiter delim.
      */
     template<typename Container>
-    static inline std::string join(const Container & tokens, const std::string & delim)
+    inline std::string join(const Container & tokens, const std::string & delim)
     {
         std::ostringstream result;
         for(auto it = tokens.begin(); it != tokens.end(); ++it)
@@ -523,7 +552,7 @@ namespace strutil
      * @param tokens - container of strings.
      */
     template<template<typename, typename...> typename Container, typename... Args>
-    static inline void drop_empty(Container<std::string, Args...> & tokens)
+    inline void drop_empty(Container<std::string, Args...> & tokens)
     {
         using container_type = Container<std::string, Args...>;
         if constexpr (detail::has_key_type<container_type>::value)
@@ -557,7 +586,7 @@ namespace strutil
      * @return container of non-empty tokens.
      */
     template<template<typename, typename...> typename Container, typename... Args>
-    static inline Container<std::string> drop_empty_copy(Container<std::string, Args...> tokens)
+    inline Container<std::string> drop_empty_copy(Container<std::string, Args...> tokens)
     {
         drop_empty(tokens);
         return tokens;
@@ -571,9 +600,9 @@ namespace strutil
      * @return vector of non-duplicate tokens.
      */
     template<typename T>
-    static inline void drop_duplicate(std::vector<T> &tokens)
+    inline void drop_duplicate(std::vector<T> &tokens)
     {
-        std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
+        std::sort(tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
         tokens.erase(end_unique, tokens.end());
     }
@@ -586,13 +615,45 @@ namespace strutil
      * @return vector of non-duplicate tokens.
      */
     template<typename T>
-    static inline std::vector<T> drop_duplicate_copy(std::vector<T> tokens)
+    inline std::vector<T> drop_duplicate_copy(std::vector<T> tokens)
     {
-        std::sort(std::execution::par_unseq, tokens.begin(), tokens.end());
+        std::sort(tokens.begin(), tokens.end());
         auto end_unique = std::unique(tokens.begin(), tokens.end());
         tokens.erase(end_unique, tokens.end());
         return tokens;
     }
+
+#ifdef STRUTIL_ENABLE_PARALLEL
+    /**
+     * @brief Parallel variant of drop_duplicate. Uses std::execution::par.
+     *        Only available when STRUTIL_ENABLE_PARALLEL is defined.
+     *        Prefer this only when tokens is large enough that the
+     *        thread-spinup cost is amortized (typically >= ~10k elements).
+     * @tparam T - arbitrary datatype.
+     * @param tokens - vector of strings.
+     */
+    template<typename T>
+    inline void drop_duplicate_par(std::vector<T> &tokens)
+    {
+        std::sort(std::execution::par, tokens.begin(), tokens.end());
+        auto end_unique = std::unique(tokens.begin(), tokens.end());
+        tokens.erase(end_unique, tokens.end());
+    }
+
+    /**
+     * @brief Parallel variant of drop_duplicate_copy. Uses std::execution::par.
+     *        Only available when STRUTIL_ENABLE_PARALLEL is defined.
+     * @tparam T - arbitrary datatype.
+     * @param tokens - vector of strings (taken by value).
+     * @return vector of non-duplicate tokens.
+     */
+    template<typename T>
+    inline std::vector<T> drop_duplicate_copy_par(std::vector<T> tokens)
+    {
+        drop_duplicate_par(tokens);
+        return tokens;
+    }
+#endif // STRUTIL_ENABLE_PARALLEL
 
     /**
      * @brief Creates new std::string with repeated n times substring str.
@@ -600,7 +661,7 @@ namespace strutil
      * @param n - number of iterations.
      * @return std::string with repeated substring str.
      */
-    static inline std::string repeat(const std::string & str, unsigned n)
+    inline std::string repeat(const std::string & str, unsigned n)
     {
         std::string result;
 
@@ -618,7 +679,7 @@ namespace strutil
      * @param n - number of iterations.
      * @return std::string with repeated char c.
      */
-    static inline std::string repeat(char c, unsigned n)
+    inline std::string repeat(char c, unsigned n)
     {
         return std::string(n, c);
     }
@@ -629,7 +690,7 @@ namespace strutil
      * @param regex - the std::regex regular expression.
      * @return True if regex matches str, false otherwise.
      */
-    static inline bool matches(const std::string & str, const std::regex & regex)
+    inline bool matches(const std::string & str, const std::regex & regex)
     {
         return std::regex_match(str, regex);
     }
@@ -639,9 +700,9 @@ namespace strutil
      * @param strs - std::vector<std::string> to be checked.
      */
     template<typename T>
-    static inline void sorting_ascending(std::vector<T> &strs)
+    inline void sorting_ascending(std::vector<T> &strs)
     {
-        std::sort(std::execution::par_unseq, strs.begin(), strs.end());
+        std::sort(strs.begin(), strs.end());
     }
 
     /**
@@ -649,17 +710,41 @@ namespace strutil
      * @param strs - std::vector<std::string> to be checked.
      */
     template<typename T>
-    static inline void sorting_descending(std::vector<T> &strs)
+    inline void sorting_descending(std::vector<T> &strs)
     {
-        std::sort(std::execution::par_unseq, strs.begin(),strs.end(), std::greater<T>());
+        std::sort(strs.begin(), strs.end(), std::greater<T>());
     }
+
+#ifdef STRUTIL_ENABLE_PARALLEL
+    /**
+     * @brief Parallel variant of sorting_ascending. Uses std::execution::par.
+     *        Only available when STRUTIL_ENABLE_PARALLEL is defined.
+     * @param strs - std::vector<T> to be sorted.
+     */
+    template<typename T>
+    inline void sorting_ascending_par(std::vector<T> &strs)
+    {
+        std::sort(std::execution::par, strs.begin(), strs.end());
+    }
+
+    /**
+     * @brief Parallel variant of sorting_descending. Uses std::execution::par.
+     *        Only available when STRUTIL_ENABLE_PARALLEL is defined.
+     * @param strs - std::vector<T> to be sorted.
+     */
+    template<typename T>
+    inline void sorting_descending_par(std::vector<T> &strs)
+    {
+        std::sort(std::execution::par, strs.begin(), strs.end(), std::greater<T>());
+    }
+#endif // STRUTIL_ENABLE_PARALLEL
 
     /**
      * @brief Reverse input container strs.
      * @param strs - container to be checked.
      */
     template<typename Container>
-    static inline void reverse_inplace(Container &strs)
+    inline void reverse_inplace(Container &strs)
     {
         std::reverse(strs.begin(), strs.end());
     }
@@ -669,7 +754,7 @@ namespace strutil
      * @param strs - container to be checked.
      */
     template<typename Container>
-    static inline Container reverse_copy(Container strs)
+    inline Container reverse_copy(Container strs)
     {
         std::reverse(strs.begin(), strs.end());
         return strs;

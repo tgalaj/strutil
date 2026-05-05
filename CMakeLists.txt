@@ -25,6 +25,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 set(COVERAGE OFF CACHE BOOL "Coverage")
 
+option(STRUTIL_ENABLE_PARALLEL "Enable parallel sibling functions (drop_duplicate_par, sorting_ascending_par, ...) in strutil.h" OFF)
+
 # Add googletest directly to our build. This defines
 # the gtest and gtest_main targets.
 add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
@@ -42,9 +44,13 @@ endif()
 add_executable(${PROJECT_NAME} tests/strutil_tests.cpp tests/test_cases.cpp strutil.h)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 
+if (STRUTIL_ENABLE_PARALLEL)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE STRUTIL_ENABLE_PARALLEL)
+endif()
+
 if (COVERAGE)
     target_compile_options(${PROJECT_NAME} PRIVATE --coverage)
     target_link_libraries(${PROJECT_NAME} PUBLIC gtest_main PRIVATE --coverage)
 else()
-	target_link_libraries(${PROJECT_NAME} gtest_main)
+	target_link_libraries(${PROJECT_NAME} PRIVATE gtest_main)
 endif()

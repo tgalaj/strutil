@@ -17,6 +17,7 @@ Any constructive comments and improvements to this little library are very welco
 - [x] Compare two std::string with their case ignored. 
 - [x] Removing all empty strings in *std::vector<std::string>* (also in-place).
 - [x] Sorting in ascending/descending order elements in *std::vector<std::string>*.
+- [x] Optional parallel sibling functions (*drop_duplicate_par*, *drop_duplicate_copy_par*, *sorting_ascending_par*, *sorting_descending_par*) opt-in via *STRUTIL_ENABLE_PARALLEL*.
 - [x] Header only library - no building required.
 - [x] Does not require any dependencies.
 
@@ -32,6 +33,22 @@ Simply put *strutil.h* in your *include* directory. Then, in C++ file include it
 
 ## Example usage
 See **tests/test_cases.cpp** file for the example usage.
+
+## Parallel variants (optional)
+By default *strutil* is fully serial and pulls in no parallel-execution headers. If you have large inputs (typically >= ~10k elements) and want to opt into parallel sorting/deduplication, define `STRUTIL_ENABLE_PARALLEL` before including the header (or pass `-DSTRUTIL_ENABLE_PARALLEL=ON` to CMake when building the test target):
+
+```
+cmake -B build -DSTRUTIL_ENABLE_PARALLEL=ON
+```
+
+When enabled, the following sibling functions become available alongside their serial counterparts:
+
+- `strutil::drop_duplicate_par`
+- `strutil::drop_duplicate_copy_par`
+- `strutil::sorting_ascending_par`
+- `strutil::sorting_descending_par`
+
+They use `std::execution::par` policy.
 
 ## Testing
 strutil supports the Google Test library ([link](https://github.com/google/googletest)). 

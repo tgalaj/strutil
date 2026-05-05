@@ -19,6 +19,7 @@ strutil provides everything you need for modern C++ string processing:
 - **Text transformation** - capitalize, repeat, to_lower, to_upper, trim operations (both in-place and copy variants)
 - **String validation** - contains, starts_with, ends_with, matches, and case-insensitive comparisons
 - **Vector utilities** - Remove empty strings, sort in ascending/descending order, remove duplicates
+- **Optional parallel variants** - Sibling `*_par` functions for sort/dedup, opt-in via the `STRUTIL_ENABLE_PARALLEL` macro / CMake option
 - **Zero dependencies** - Header-only design means no building or linking required
 
 ## Usage
@@ -38,6 +39,23 @@ For comprehensive usage examples and test cases, check out our [test suite](http
 ## API Documentation
 
 For detailed function signatures and parameters, see the [strutil namespace documentation](strutil/namespacestrutil.md). 
+
+## Parallel variants (optional)
+
+The default build of strutil is fully serial and does not pull in `<execution>`. For large inputs (typically >= ~10k elements) you can opt into parallel sibling functions by defining the `STRUTIL_ENABLE_PARALLEL` macro before including the header, or by passing `-DSTRUTIL_ENABLE_PARALLEL=ON` to CMake:
+
+```
+cmake -B build -DSTRUTIL_ENABLE_PARALLEL=ON
+```
+
+This enables the following functions alongside their serial counterparts:
+
+- `strutil::drop_duplicate_par`
+- `strutil::drop_duplicate_copy_par`
+- `strutil::sorting_ascending_par`
+- `strutil::sorting_descending_par`
+
+They execute under `std::execution::par` policy.
 
 ## Testing
 
