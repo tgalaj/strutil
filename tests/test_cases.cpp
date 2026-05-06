@@ -251,18 +251,22 @@ TEST(Parsing, string_to_u_char)
 TEST(Parsing, string_to_float)
 {
     EXPECT_FLOAT_EQ(5.245f, strutil::parse_string<float>("5.245"));
-    // Trailing junk after the numeric prefix is silently ignored by istringstream.
+    EXPECT_FLOAT_EQ(-0.5f, strutil::parse_string<float>("-0.5"));
+    // Trailing non-numeric characters are parsed up to the first invalid
+    // character — consistent across libstdc++ and libc++ thanks to strtof.
     EXPECT_FLOAT_EQ(5.245f, strutil::parse_string<float>("5.245f"));
 }
 
 TEST(Parsing, string_to_double)
 {
     EXPECT_DOUBLE_EQ(5.245, strutil::parse_string<double>("5.245"));
+    EXPECT_DOUBLE_EQ(5.245, strutil::parse_string<double>("5.245xyz"));
 }
 
 TEST(Parsing, string_to_long_double)
 {
     EXPECT_NEAR(-5.245L, strutil::parse_string<long double>("-5.245"), 1e-12L);
+    EXPECT_NEAR(-5.245L, strutil::parse_string<long double>("-5.245L"), 1e-12L);
 }
 
 TEST(Parsing, string_to_bool)
@@ -310,6 +314,91 @@ TEST(Parsing, string_to_custom_type)
 {
     const auto p = strutil::parse_string<Point2D>("3,4");
     EXPECT_EQ((Point2D{ 3, 4 }), p);
+}
+
+/*
+* try_parse_string — explicit success/failure reporting via std::optional.
+* The key difference from parse_string is that "0", "0.0", and false-like
+* inputs can be distinguished from genuine parse failures.
+*/
+
+TEST(TryParsing, valid_int_returns_value)
+{
+    const auto v = strutil::try_parse_string<int>("42");
+    ASSERT_TRUE(v.has_value());
+    EXPECT_EQ(42, *v);
+}
+
+TEST(TryParsing, invalid_int_returns_nullopt)
+{
+    EXPECT_FALSE(strutil::try_parse_string<int>("abc").has_value());
+    EXPECT_FALSE(strutil::try_parse_string<int>("").has_value());
+}
+
+TEST(TryParsing, distinguishes_zero_from_failure)
+{
+    // The whole point of try_parse_string: "0" is a valid parse, "abc" is not,
+    // but parse_string returns 0 for both.
+    const auto zero = strutil::try_parse_string<int>("0");
+    const auto bad  = strutil::try_parse_string<int>("abc");
+    ASSERT_TRUE(zero.has_value());
+    EXPECT_EQ(0, *zero);
+    EXPECT_FALSE(bad.has_value());
+}
+
+TEST(TryParsing, valid_float_returns_value)
+{
+    const auto v = strutil::try_parse_string<float>("5.245");
+    ASSERT_TRUE(v.has_value());
+    EXPECT_FLOAT_EQ(5.245f, *v);
+}
+
+TEST(TryParsing, float_with_trailing_junk_returns_value)
+{
+    // strtof-backed specialization: trailing non-numeric chars are ignored
+    // as long as a numeric prefix was successfully parsed.
+    const auto v = strutil::try_parse_string<float>("5.245f");
+    ASSERT_TRUE(v.has_value());
+    EXPECT_FLOAT_EQ(5.245f, *v);
+}
+
+TEST(TryParsing, invalid_float_returns_nullopt)
+{
+    EXPECT_FALSE(strutil::try_parse_string<float>("abc").has_value());
+    EXPECT_FALSE(strutil::try_parse_string<float>("").has_value());
+}
+
+TEST(TryParsing, distinguishes_false_from_failure)
+{
+    // parse_string<bool>("hello") silently returns false — try_parse_string
+    // surfaces the failure.
+    const auto good = strutil::try_parse_string<bool>("0");
+    const auto bad  = strutil::try_parse_string<bool>("hello");
+    ASSERT_TRUE(good.has_value());
+    EXPECT_FALSE(*good);
+    EXPECT_FALSE(bad.has_value());
+}
+
+TEST(TryParsing, value_or_provides_default)
+{
+    EXPECT_EQ(8080, strutil::try_parse_string<int>("not_a_port").value_or(8080));
+    EXPECT_EQ(1234, strutil::try_parse_string<int>("1234").value_or(8080));
+}
+
+TEST(TryParsing, custom_type_via_primary_template)
+{
+    // The float/double/long-double overloads use the strtof-based
+    // specialization; everything else (including user-defined types like
+    // Point2D, defined above) falls through to the primary template's
+    // istringstream-based path. Exercise that path explicitly.
+    const auto good = strutil::try_parse_string<Point2D>("3,4");
+    ASSERT_TRUE(good.has_value());
+    EXPECT_EQ((Point2D{ 3, 4 }), *good);
+
+    // Garbage input that cannot satisfy "<int>,<int>" => failure surfaces
+    // through the stream's failbit, not as a default-constructed Point2D.
+    const auto bad = strutil::try_parse_string<Point2D>("not a point");
+    EXPECT_FALSE(bad.has_value());
 }
 
 /*
@@ -584,6 +673,24 @@ TEST(SplittingSet, join)
     EXPECT_EQ(str2, strutil::join(tokens2, "|"));
 }
 
+TEST(SplittingVector, join_edge_cases)
+{
+    // Empty container => empty string, no leading/trailing delimiter.
+    EXPECT_EQ("", strutil::join(std::vector<std::string>{}, ";"));
+    EXPECT_EQ("", strutil::join(std::vector<int>{}, ", "));
+
+    // Single element => no delimiter is emitted.
+    EXPECT_EQ("only", strutil::join(std::vector<std::string>{ "only" }, ";"));
+    EXPECT_EQ("42",   strutil::join(std::vector<int>{ 42 }, ", "));
+
+    // Empty delimiter concatenates without separator.
+    EXPECT_EQ("abc", strutil::join(std::vector<std::string>{ "a", "b", "c" }, ""));
+
+    // Container of empty strings — each "element" contributes nothing,
+    // but the delimiters between them are still emitted.
+    EXPECT_EQ(",,", strutil::join(std::vector<std::string>{ "", "", "" }, ","));
+}
+
 TEST(SplittingDropEmptyVector, drop_empty)
 {
     std::vector<std::string> tokens = { "t1", "t2", "", "t4", "" };
@@ -675,6 +782,7 @@ TEST(TestDropDuplicateCopyPar, drop_duplicate_copy_par)
 TEST(TextManip, to_lower)
 {
     EXPECT_EQ("hello strutil", strutil::to_lower("HeLlo StRUTIL"));
+    EXPECT_EQ("", strutil::to_lower(""));
 }
 
 TEST(TextManip, to_upper)
@@ -736,10 +844,51 @@ TEST(TextManip, trim_both)
     EXPECT_EQ("HeLlo StRUTIL", strutil::trim_copy("    HeLlo StRUTIL      "));
 }
 
+TEST(TextManip, trim_edge_cases)
+{
+    // Empty string: should remain empty, no UB.
+    {
+        std::string s;
+        strutil::trim_left(s);   EXPECT_EQ("", s);
+        strutil::trim_right(s);  EXPECT_EQ("", s);
+        strutil::trim(s);        EXPECT_EQ("", s);
+    }
+    EXPECT_EQ("", strutil::trim_left_copy(""));
+    EXPECT_EQ("", strutil::trim_right_copy(""));
+    EXPECT_EQ("", strutil::trim_copy(""));
+
+    // String of only whitespace collapses to empty.
+    EXPECT_EQ("", strutil::trim_copy("     \t\n\r"));
+    EXPECT_EQ("", strutil::trim_left_copy("   \t  "));
+    EXPECT_EQ("", strutil::trim_right_copy("   \t  "));
+
+    // String with no whitespace is unchanged.
+    EXPECT_EQ("abc", strutil::trim_copy("abc"));
+    EXPECT_EQ("abc", strutil::trim_left_copy("abc"));
+    EXPECT_EQ("abc", strutil::trim_right_copy("abc"));
+
+    // Whitespace-only on one side — make sure the OTHER side is preserved.
+    EXPECT_EQ("abc   ", strutil::trim_left_copy("   abc   "));
+    EXPECT_EQ("   abc", strutil::trim_right_copy("   abc   "));
+
+    // std::isspace should recognize tabs, newlines, CR, vertical tab, form feed.
+    EXPECT_EQ("hello", strutil::trim_copy("\t\n\r\v\f hello \f\v\r\n\t"));
+
+    // Internal whitespace must NOT be stripped.
+    EXPECT_EQ("hello   world", strutil::trim_copy("   hello   world   "));
+}
+
 TEST(TextManip, repeat)
 {
     EXPECT_EQ("GoGoGoGo",   strutil::repeat("Go", 4));
     EXPECT_EQ("ZZZZZZZZZZ", strutil::repeat('Z', 10));
+
+    // n == 0 produces an empty string for both overloads.
+    EXPECT_EQ("", strutil::repeat("Go", 0));
+    EXPECT_EQ("", strutil::repeat('Z', 0));
+
+    // Repeating an empty string is also empty regardless of n.
+    EXPECT_EQ("", strutil::repeat("", 5));
 }
 
 TEST(TextManip, replace_first)
@@ -794,6 +943,47 @@ TEST(TextManip, no_replace_all)
 
     EXPECT_EQ(false, res);
     EXPECT_EQ("This is $name and that is also $name.", str1);
+}
+
+TEST(TextManip, replace_all_self_overlapping)
+{
+    std::string s = "aaa";
+    bool res = strutil::replace_all(s, "a", "aa");
+    EXPECT_EQ(true, res);
+    EXPECT_EQ("aaaaaa", s);
+
+    // Replacement that *fully contains* the target (longer prefix)
+    std::string s2 = "ab";
+    EXPECT_EQ(true, strutil::replace_all(s2, "a", "ab"));
+    EXPECT_EQ("abb", s2);
+}
+
+TEST(TextManip, replace_with_empty_replacement)
+{
+    // Replacement = "" effectively deletes the target. Worth pinning down
+    // for all three replace_* variants.
+    std::string s1 = "foo bar foo baz foo";
+    EXPECT_EQ(true, strutil::replace_first(s1, "foo ", ""));
+    EXPECT_EQ("bar foo baz foo", s1);
+
+    std::string s2 = "foo bar foo baz foo";
+    EXPECT_EQ(true, strutil::replace_last(s2, " foo", ""));
+    EXPECT_EQ("foo bar foo baz", s2);
+
+    std::string s3 = "foo bar foo baz foo";
+    EXPECT_EQ(true, strutil::replace_all(s3, "foo", ""));
+    EXPECT_EQ(" bar  baz ", s3);
+}
+
+TEST(TextManip, replace_first_last_target_empty)
+{
+    std::string s1 = "abc";
+    EXPECT_EQ(false, strutil::replace_first(s1, "", "X"));
+    EXPECT_EQ("abc", s1);
+
+    std::string s2 = "abc";
+    EXPECT_EQ(false, strutil::replace_last(s2, "", "X"));
+    EXPECT_EQ("abc", s2);
 }
 
 TEST(TextManip, replace_all_target_empty)

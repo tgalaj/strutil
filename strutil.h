@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
 #include <map>
 #include <optional>
 #include <regex>
@@ -44,6 +45,9 @@ namespace strutil
      *        On parse failure the result is value-initialized (e.g. 0 for
      *        arithmetic types, false for bool). Use try_parse_string if you
      *        need to distinguish failure from a legitimate zero/default value.
+     *        For floating-point types, parsing uses std::strtof/strtod/strtold
+     *        rather than stream extraction, so trailing non-numeric characters
+     *        (e.g. "5.245f") are consistently ignored across libstdc++/libc++.
      * @tparam T
      * @param str - std::string that will be converted into datatype T.
      * @return Variable of datatype T, or T{} on parse failure.
@@ -77,6 +81,72 @@ namespace strutil
         {
             return std::nullopt;
         }
+        return result;
+    }
+
+    // Floating-point specializations.
+    //
+    // Stream extraction of floats with trailing non-numeric characters
+    // (e.g. "5.245f") is implementation-defined — libstdc++ accepts the
+    // numeric prefix while libc++ rejects the whole input. We delegate to
+    // std::strtof/strtod/strtold instead, which always parse the longest
+    // valid prefix and behave identically across standard library
+    // implementations.
+
+    template<>
+    inline float parse_string<float>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const float result = std::strtof(begin, &end);
+        return (end == begin) ? 0.0f : result;
+    }
+
+    template<>
+    inline double parse_string<double>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const double result = std::strtod(begin, &end);
+        return (end == begin) ? 0.0 : result;
+    }
+
+    template<>
+    inline long double parse_string<long double>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const long double result = std::strtold(begin, &end);
+        return (end == begin) ? 0.0L : result;
+    }
+
+    template<>
+    inline std::optional<float> try_parse_string<float>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const float result = std::strtof(begin, &end);
+        if (end == begin) return std::nullopt;
+        return result;
+    }
+
+    template<>
+    inline std::optional<double> try_parse_string<double>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const double result = std::strtod(begin, &end);
+        if (end == begin) return std::nullopt;
+        return result;
+    }
+
+    template<>
+    inline std::optional<long double> try_parse_string<long double>(const std::string & str)
+    {
+        const char * begin = str.c_str();
+        char * end = nullptr;
+        const long double result = std::strtold(begin, &end);
+        if (end == begin) return std::nullopt;
         return result;
     }
 
@@ -254,6 +324,11 @@ namespace strutil
      */
     inline bool replace_first(std::string & str, const std::string & target, const std::string & replacement)
     {
+        if (target.empty())
+        {
+            return false;
+        }
+        
         const size_t start_pos = str.find(target);
         if (start_pos == std::string::npos)
         {
@@ -274,6 +349,11 @@ namespace strutil
      */
     inline bool replace_last(std::string & str, const std::string & target, const std::string & replacement)
     {
+        if (target.empty())
+        {
+            return false;
+        }
+
         size_t start_pos = str.rfind(target);
         if (start_pos == std::string::npos)
         {
